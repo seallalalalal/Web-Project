@@ -1,0 +1,442 @@
+<script>
+var totalsc=0;
+var sel=-1;
+var test = "";
+var score = 0;
+var record = 1;
+var question = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var feedback = [0, 0, 0, 0, 0];
+var Lsource = ["<a href=../10path.html>路徑</a>",
+				"<a href=../8tableTag>表格標籤</a>",
+				"<a href=../12frame> 其他</a>",
+				"<a href=../7linkTag>連結標籤 </a>",
+				"<a href=../9listTag>清單標籤 </a>",];
+var hint =["正確！表上層目錄（CS）之子目錄（ut）下的1.html檔案", "此為絕對路徑之表示法 ", " 表同層目錄（CS）之子目錄（ut）下的1.html檔案",
+		"乙的位置不正確","正確！ ","COLSPAN 屬性: 設定該儲存格所佔的水平寬度 ",
+		"CELLSPACING 為設定不同儲存格之間的間距"," 正確！CELLPADDING為設定儲存格之內容的間距","為設定儲存格之內容的間距及不同儲存格之間的間距",
+		"正確！"," 為將視窗做分割","為表格 ",
+		"一般按鈕"," 為核取方塊","正確！選項按鈕 ",
+		"再想想"," 再想想","正確！ ",
+		"正確！","為無編號列示之命令碼 ","為前導記號之命令碼 ",
+		"正確！","Border為邊界的意思 "," Border為邊界的意思",
+		"為產生表格列 (Table Row)。在HTML 文件中, 表格中的一列(Row)元素必須夾在<tr>...</tr>這對標記間。"," 正確！","為表頭(table header)，比其它儲存格顏色深 ",
+		"這是對的","frame不能放在body中 "," 這是對的", ];
+
+
+function judge(){
+	if(record == 1){
+		for(var k = 0; k < 10; k++){	
+			if(question[k] == 1){
+				score = score + 10;
+				document.getElementById("xo[" + k +"]").innerHTML = "<b><font color = #00bb00>		//correct</font></b>";
+			}
+			else{
+				document.getElementById("xo[" + k +"]").innerHTML = "<b><font color = red>		//incorrect</font></b>";
+			}
+		}
+	}
+	else alert("已交卷");
+	document.getElementById("showScore").innerHTML=score;
+	record = -1;
+ }
+function suggest() {
+	var advice='建議學習:<br>';
+	if(record == -1){
+		for(var i=0;i<5;i++)
+			if (feedback[i] == 0){
+				advice=advice+'<br>'+Lsource[i];
+			}
+		document.getElementById("msg3").innerHTML=advice;
+	}
+	else	alert("請先交卷!");	
+}
+
+function retest(){
+	clearInterval(timevar1);
+	sec = 0;
+	min = 10;
+	timebegin();
+	record = 1;
+	sel=-1;
+	score=0;
+	document.getElementById("showScore").innerHTML="";
+	document.getElementById("msg3").innerHTML='';
+	for(var i=0;i<10;i++){
+		question[i]=feedback[i] = 0;
+		document.getElementById("xo[" + i +"]").innerHTML = "";
+	}
+	for(var j = 0; j < 31; j++){
+		document.getElementById("showHint[" + j + "]").innerHTML ="";
+	}
+ }
+ function explain(){
+	if(record == -1)
+		for(var j = 0; j < 31; j++){
+			document.getElementById("showHint[" + j + "]").innerHTML ="<font color = blue>		//" + hint[j] + "</font>";
+		}
+	else alert("請先交卷！");
+ }
+ 
+  var timevar1;
+function timebegin(){
+  timevar1=setInterval('timelimit()',1000);
+  }
+var usetime=0;
+var dt = new Date();
+var tm;
+var min = 10;
+var sec = 0;
+ function timelimit() {
+	
+	
+	if(sec == 0 && min != 0){
+		sec = 60;
+		min --;
+	}
+	sec--;
+	if(sec == 0 && min == 0){
+		clearInterval(timevar1);
+		alert("測驗結束!");
+		for(var i=0;i<29;i++){
+			document.getElementById('sel'+i).disabled=true;
+		}
+		judge();
+	}
+  tm = dt.toLocaleTimeString();
+  document.getElementById('current').innerHTML=tm;
+  usetime++;
+  if(min == 0 && sec <= 30)
+	document.getElementById('second').innerHTML="<font color = red>"+sec+"</font>"; 
+  else
+  document.getElementById('second').innerHTML=sec; 
+  document.getElementById('minute').innerHTML=min; 
+}
+</script>
+
+
+
+
+<!DOCTYPE HTML>
+<!--
+	Transitive by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+
+<html>
+	<head>
+		<title>選擇練習題2</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="subpage" onload = "timebegin()">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="logo"><a href="index.html">HTML <span>教學網站</span></a></div>
+				<a href="#menu" class="toggle"><span>Menu</span></a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li> <a>html命令介紹</a></li>
+					<ul>
+						<li> <a href= "1seperateTag.html">分隔標籤</a></li>
+  						<li> <a href= "2typographyTag.html">排版標籤</a></li>
+  						<li> <a href= "3textTag.html">文字標籤</a></li>
+  						<li> <a href= "4specialSymbol.html">特殊字元</a></li>
+  						<li> <a href= "5imageTag.html">影像標籤</a></li>
+						<li> <a href= "6backGroundTag.html">背景標籤</a></li>
+						<li> <a href= "7linkTag.html">連結標籤</a></li>
+						<li> <a href= "8tableTag.html">表格標籤</a></li>
+						<li> <a href= "9listTag.html">清單標籤</a></li>
+						<li> <a href= "10path.html">路徑</a></li>
+ 						<li> <a href= "11marquee.html">跑馬燈</a></li>
+ 						<li> <a href= "12frame.html">框架</a></li>
+						<li> <a href= "13imageMap.html">影像地圖</a></li>
+					</ul>
+					<li><a>選擇題</a></li>
+					<ul>
+						<li> <a href= "multipleChoice1.html">選擇練習題1</a></li>
+   						<li> <a href= "multipleChoice2.html">選擇練習題2</a></li>
+ 					</ul>
+					<li><a>手寫題</a></li>
+					<ul>
+   						<li> <a href= "hW-1seperateTag.html">分隔標籤</a></li>
+  						<li> <a href= "hW-2typographyTag.html">排版標籤</a></li>
+						<li> <a href= "hW-3.1textTag.html">文字標籤1</a></li>
+						<li> <a href= "hW-3.2textTag.html">文字標籤2</a></li>
+						<li> <a href= "hW-3.3textTag.html">文字標籤3</a></li>
+  						<li> <a href= "hW-5imageTag.html">影像標籤</a></li>
+						<li> <a href= "hW-7linkTag.html">連結標籤</a></li>
+						<li> <a href= "hW-8.1tableTag.html">表格標籤1</a></li>
+						<li> <a href= "hW-8.2tableTag.html">表格標籤2</a></li>
+						<li> <a href= "hW-8.3tableTag.html">表格標籤3</a></li>
+						<li> <a href= "hW-8.4tableTag.html">表格標籤4</a></li>
+						<li> <a href= "hW-9listTag.html">清單標籤</a></li>
+						<li> <a href= "hW-10marquee.html">跑馬燈</a></li>
+ 						<li> <a href= "hW-11frame.html">框架</a></li>
+ 					</ul>
+					<li><a>模擬練習</a></li>
+					<ul>
+   						<li> <a href= "JStest/1.html">迴圈模擬1</a></li>
+  						<li> <a href= "JStest2/loop.html">迴圈模擬2</a></li>
+						
+ 					</ul>
+ 					<li> <a href= "references.html">參考與資料來源</a></li>
+					<li> <a href= "textIndex.html">標籤索引</a></li>
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<section id="one" class="wrapper style2">
+				<div class="inner">
+					<div class="box">
+						<div class="image fit">
+							<img src="images/pic01.jpg" alt="" />
+						</div>
+						<div class="content">
+							<header class="align-center">
+								<h2>選擇練習題2</h2>
+								<p></p>
+							</header>
+							<hr size = 1 bgcolor = grey>
+							<font color = black>
+								<p>
+									現在時間: <span id='current'></span><br>
+									剩餘時間: <span id = "minute">10</span>分 <span id='second'>0</span> 秒
+								</p>
+								<ol>
+								<p><li>下列何者為使用相對路徑在3.html中表示超連結至1.html？?<span id = xo[0]></span></li>
+								<img src=images/選1.png width=300 height=300></p>
+								<div class="4u 12u$(small)">
+									<input type="radio" id="sel0" name=p0 onclick='sel=0;question[0] = 1;feedback[0] = 1;'>
+									<label for="sel0"><font color = black>&lt;a href=../CS/ut/1.html&gt;[to 1.html]&lt;/a&gt;</font><br><span id = showHint[0]></span></label>
+								</div>
+								<div class="4u 12u$(small)">
+									<input type="radio" id="sel1" name=p0 onclick='sel=1;question[0] = 0;'>
+									<label for="sel1"><font color = black>&lt;a href=C:\Users\Desktop\程式語言\HTML\home\CS\ut\1.html&gt[to 1.html]&lt;/a&gt;</font><br><span id = showHint[1]></span></label>
+								</div>
+								<div class="4u 12u$(small)">
+									<input type="radio" id="sel2" name=p0 onclick='sel=2;question[0] = 0;'>
+									<label for="sel2"><font color = black>&lt;a href=./CS/ut/1.html&gt;[to 1.html]&lt;/a&gt;</font><br><span id = showHint[2]></span></label>
+								</div>
+								</p>
+								<p><li>下列何者為下方表格的撰寫方式？<span id = xo[1]></span></li>
+								<img src = images/選2.jpg width = 100>
+									
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel3" name=p1 onclick='sel=3;question[1] = 0;'>
+										<label for="sel3"><font color = black> &lt;table border&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td rowspan=2&gt;甲&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;/tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td&gt;乙&lt;/td&gt;&lt;td&gt;丙&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;/tr&gt;<br>
+											 &lt;/table&gt;</font><br><span id = showHint[3]></span>
+										</label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel4" name=p1 onclick='sel=4;question[1] = 1;feedback[1] = 1;'>
+										<label for="sel4"><font color = black>&lt;table border&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td rowspan=2&gt;甲&lt;/td&gt;&lt;td&gt;乙&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;/tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td&gt;丙&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;/tr&gt;
+											 &lt;/table&gt;<br></font><br><span id = showHint[4]></span>
+										</label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel5" name=p1 onclick='sel=5;question[1] = 0;'>
+										<label for="sel5"><font color = black> &lt;table border&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td colspan=2&gt;甲&lt;/td&gt;&lt;td&gt;乙&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;/tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td&gt;丙&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &lt;/table&gt;</font><br><span id = showHint[5]></span>
+										</label>
+									</div>
+								</p>
+								<p><li>下列何者為下方表格的撰寫方式？<span id = xo[2]></li>
+									<img src = images/選3.png width = 150>						
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel6" name=p2 onclick='sel=6;question[2] = 0;'>
+										<label for="sel6"><font color = black>&lt;table border cellspacing=30&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td&gt;甲&lt;/td&gt;&lt;td&gt;乙&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;/tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td&gt;丙&lt;/td&gt;&lt;td&gt;丁&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;/tr&gt;<br>
+											 &lt;/table&gt;</font><br><span id = showHint[6]></span>
+										</label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel7" name=p2 onclick='sel=7;question[2] = 1;feedback[1] = 1;'>
+										<label for="sel7"><font color = black>&lt;table border cellpadding=30&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td&gt;甲&lt;/td&gt;&lt;td&gt;乙&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;/tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td&gt;乙&lt;/td&gt;&lt;td&gt;丙&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;/tr&gt;
+											 &lt;/table&gt;<br></font><br><span id = showHint[7]></span>
+										</label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel8" name=p2 onclick='sel=8;question[2] = 0;'>
+										<label for="sel8"><font color = black>&lt;table border cellpading=30 cellspacing=30&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td&gt;甲&lt;/td&gt;&lt;td&gt;乙&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;/tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;tr&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;td&gt;丙&lt;/td&gt;&lt;td&gt;丁&lt;/td&gt;<br>
+											 &nbsp&nbsp&nbsp&nbsp&lt;/tr&gt;<br>
+											 &lt;/table&gt;</font><br><span id = showHint[8]></span>
+										</label>
+									</div>
+								</p>
+								<p><li>下列何者為做出下圖效果之命令碼？<span id = xo[3]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel9" name=p3 onclick='sel=9;question[3] = 1;feedback[2] = 1;'>
+										<label for="sel9"><font color = black>&lt;iframe&gt;</font><br><span id = showHint[9]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel10" name=p3 onclick='sel=10;question[3] = 0;'>
+										<label for="sel10"><font color = black>&lt;frameset&gt;&lt;frame&gt;&lt;/frameset&gt;</font><br><span id = showHint[10]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel11" name=p3 onclick='sel=11;question[3] = 0;'>
+										<label for="sel11"><font color = black>&lt;table&gt;&lt;/table&gt;</font><br><span id = showHint[11]></span></label>
+									</div>
+								</p>
+								<p><li>下列何者為做出右圖效果之命令碼？<span id = xo[4]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel12" name=p4 onclick='sel=12;question[4] = 0;'>
+										<label for="sel12"><font color = black>&lt;input type="button"&gt;&lt;/button&gt;</font><br><span id = showHint[12]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel13" name=p4 onclick='sel=13;question[4] = 0;'>
+										<label for="sel13"><font color = black>&lt;input type="checkbox"&gt;&lt;/button&gt;</font><br><span id = showHint[13]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel14" name=p4 onclick='sel=14;question[4] = 1;feedback[2] = 1;'>
+										<label for="sel14"><font color = black>&lt;input type="radio"&gt;&lt;/button&gt;</font><br><span id = showHint[14]></span></label>
+									</div>
+								</p>
+								<p><li>&lt;a href = …&gt;&lt;/a&gt為超連結之命令碼，下列何者不能放入”…”作為超連結使用？<span id = xo[5]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel15" name=p5 onclick='sel=15;question[5] = 0;'>
+										<label for="sel15"><font color = black>貓咪的圖片</font><br><span id = showHint[15]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel16" name=p5 onclick='sel=16;question[5] = 0;'>
+										<label for="sel16"><font color = black>電子郵件位址</font><br><span id = showHint[16]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel17" name=p5 onclick='sel=17;question[5] = 1;feedback[3] = 1;'>
+										<label for="sel17"><font color = black>以上皆能放入</font><br><span id = showHint[17]></span></label>
+									</div>
+								</p>
+								<p><li>下列何者為無編號列示(List)之命令碼？<span id = xo[6]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel18" name=p6 onclick='sel=18;question[6] = 1;feedback[4] = 1;'>
+										<label for="sel18"><font color = black>&lt;ul&gt;&lt;/ul&gt;</font><br><span id = showHint[18]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel19" name=p6 onclick='sel=19;question[6] = 0;'>
+										<label for="sel19"><font color = black>&lt;ol&gt;&lt;/ol&gt;</font><br><span id = showHint[19]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel20" name=p6 onclick='sel=20;question[6] = 0;'>
+										<label for="sel20"><font color = black>&lt;li&gt;&lt;/li&gt;</font><br><span id = showHint[20]></span></label>
+									</div>
+								</p>
+								<p><li>下列何者為&lt;table&gt;&lt;/table&gt;與&lt;table border&gt;&lt;/table&gt;之區別？<span id = xo[7]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel21" name=p7 onclick='sel=21;question[7] = 1;feedback[1] = 1;'>
+										<label for="sel21"><font color = black>前者沒有外框</font><br><span id = showHint[21]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel22" name=p7 onclick='sel=22;question[7] = 0;'>
+										<label for="sel22"><font color = black>後者沒有外框</font><br><span id = showHint[22]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel23" name=p7 onclick='sel=23;question[7] = 0;'>
+										<label for="sel23"><font color = black>沒有區別</font><br><span id = showHint[23]></span></label>
+									</div>
+								</p>
+								<p><li>下列何者為表格儲存格之命令碼？<span id = xo[8]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel24" name=p8 onclick='sel=24;question[8] = 0;'>
+										<label for="sel24"><font color = black>&lttr&gt; &lt/tr&gt;</font><br><span id = showHint[24]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel25" name=p8 onclick='sel=25;question[8] = 1;feedback[1] = 1;'>
+										<label for="sel25"><font color = black>&lttd&gt; &lt/td&gt;</font><br><span id = showHint[25]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel26" name=p8 onclick='sel=26;question[8] = 0;'>
+										<label for="sel26"><font color = black>&ltth&gt; &lt/th&gt;</font><br><span id = showHint[26]></span></label>
+									</div>
+								</p>
+								<p><li>有關iframe和frame的區別何者錯誤？<span id = xo[9]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel27" name=p9 onclick='sel=27;question[9] = 0;'>
+										<label for="sel27"><font color = black>frame不能脫離frameSet單獨使用，iframe可以</font><br><span id = showHint[27]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel28" name=p9 onclick='sel=28;question[9] = 1;feedback[2] = 1;'>
+										<label for="sel28"><font color = black>iframe不能放在body中</font><br><span id = showHint[28]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel29" name=p9 onclick='sel=29;question[9] = 0;'>
+										<label for="sel29"><font color = black>巢狀在frameSet中的iframe必需放在body中</font><br><span id = showHint[29]></span></label>
+									</div>
+								</p>
+
+								<p id='msg'> </p>
+								<font size = 5 color = red><span>your score: </span><span id='showScore'></span><br></font>
+								<button onclick = "judge()">交卷</button>	<button onclick = "explain()">顯示詳解</button>	<button onclick="suggest();">學習診斷</button>	
+								<button onclick="retest();">重新挑戰</button>
+								<p id='msg3'></p>
+							</font>
+							
+							
+						</div>
+					</div>
+				</div>
+			</section>
+
+		<!-- Four -->
+			<section id="four" class="wrapper style3">
+				<div class="inner">
+
+					<header class="align-center">
+						<h2>開發成員介紹</h2>
+						<p>作者:賴阿福、楊文忻、金宣妘<br><a href = "author.html"><font color = grey>查看更多作者介紹</font></a><br>模板:<a href = "https://templated.co/transitive" target = _blank>Transitive TEMPLATED</a></p>
+					</header>
+
+				</div>
+			</section>
+
+		
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

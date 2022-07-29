@@ -1,0 +1,150 @@
+<html>
+<script>
+var totalsc=0;
+var sel=-1;
+var record = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var scores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var concept = [" ", " ", " ", "",  "", "", "", "", "", "",];
+var Lsource = ["<a href=> </a>",
+				"<a href=> </a>",
+				"<a href=> </a>",
+				"<a href=> </a>",
+				"<a href=> </a>",
+				"<a href=> </a>",
+				"<a href=> </a>",
+				"<a href=> </a>",
+				"<a href=> </a>",
+				"<a href=> </a>",];
+var hint =["正確！表上層目錄（CS）之子目錄（ut）下的1.html檔案", "此為絕對路徑之表示法 ", " 表同層目錄（CS）之子目錄（ut）下的1.html檔案",
+		"乙的位置不正確","正確！ ","COLSPAN 屬性: 設定該儲存格所佔的水平寬度 ",
+		"CELLSPACING 為設定不同儲存格之間的間距"," 正確！CELLPADDING為設定儲存格之內容的間距","為設定儲存格之內容的間距及不同儲存格之間的間距",
+		"正確！"," 為將視窗做分割","為表格 ",
+		"一般按鈕"," 為核取方塊","正確！選項按鈕 ",
+		"再想想"," 再想想","正確！ ",
+		"正確！","為無編號列示之命令碼 ","為前導記號之命令碼 ",
+		"正確！","Border為邊界的意思 "," Border為邊界的意思",
+		"為產生表格列 (Table Row)。在HTML 文件中, 表格中的一列(Row)元素必須夾在<tr>...</tr>這對標記間。"," 正確！","為表頭(table header)，比其它儲存格顏色深 ",
+		"這是對的","frame不能放在body中 "," 這是對的", ];
+function showhint() {
+ if (sel>=0)
+  document.getElementById("hint1").innerHTML='<font color=red>'+hint[sel]+'</font>';
+ }
+
+function judge(i,j) //i-th question, j==1:correct; j==0:incorrect
+{
+ record[i]++;
+ if (record[i]<=3)
+    {
+     if (j==1 && scores[i] == 0) {
+		
+		if(record[i] >= 3)	secores[i] = 0;
+		else	scores[i]=10 / record[i];//record score of this question:10, 5, 0
+		totalsc=totalsc+scores[i];
+		document.getElementById("msg").innerHTML='<img src=../../素材庫/o.jpg width = 40><font color=red>Correct!</font>';
+        }
+	if(j == 1)	document.getElementById("msg").innerHTML='<img src=../../素材庫/o.jpg width = 40><font color=red>Correct!</font>';
+      else
+        document.getElementById("msg").innerHTML='<img src=../../素材庫/x.jpg width = 40><font color=blue>Incorrect!</font>';
+		document.getElementById("feedback").innerHTML=totalsc;
+     }
+   else
+     document.getElementById("msg").innerHTML='<font color=blue>不要用猜!!</font>';
+ }
+function suggest() {
+ var unfamilar='不熟悉觀念:<br>';
+ var advice='建議學習:<br>';
+ for(var i=0;i<=10;i++)
+ if (record[i]>1){
+    unfamilar=unfamilar+concept[i]+'<br>';
+    advice=advice+Lsource[i]+'<br>';
+    }
+ document.getElementById("msg2").innerHTML=unfamilar;
+ document.getElementById("msg3").innerHTML=advice;
+}
+
+function retest(){
+ sel=-1;
+ totalsc=0;
+ for(var i=0;i<=2;i++)
+   record[i]=scores[i]=0;
+ document.getElementById("feedback").innerHTML="";
+ document.getElementById("feedback").innerHTML="";
+ document.getElementById("hint1").innerHTML='';
+ document.getElementById("msg2").innerHTML='';
+ document.getElementById("msg3").innerHTML='';
+ }
+</script>
+<body bgcolor = "#ADADAD">
+<font size=3>
+<div style=margin:50px 130px 130px 130px>
+<center><h1>選擇題2</h1></center>
+
+1.下列何者為使用相對路徑在3.html中表示超連結至1.html？<br>
+<img src=../../素材庫/選1.png width=400 height=400><br>
+ <input type=radio style=width:20;height:20; name=p0 onclick='sel=0;judge(0,1);' ><img src=../../素材庫/選1-1.jpg><br>
+ <input type=radio style=width:20;height:20; name=p0 onclick='sel=1;judge(0,0);'><img src=../../素材庫/選1-2.jpg><br>
+ <input type=radio style=width:20;height:20; name=p0 onclick='sel=2;judge(0,0);'><img src=../../素材庫/選1-3.jpg><br>
+<br><br>
+2.下列何者為下方表格的撰寫方式？<br>
+<img src=../../素材庫/選2.jpg width=150 height=150><br>
+ <input type=radio style=width:20;height:20; name=p1 onclick='sel=3;judge(1,0);'><img src=../../素材庫/選2-1.jpg width=30% height=30%>
+ <input type=radio style=width:20;height:20; name=p1 onclick='sel=4;judge(1,1);'><img src=../../素材庫/選2-2.jpg width=30% height=30%>
+ <input type=radio style=width:20;height:20; name=p1 onclick='sel=5;judge(1,0);'><img src=../../素材庫/選2-3.jpg width=30% height=30%> <br>
+<br><br>
+3.下列何者為下方表格的撰寫方式？<br>
+<img src=../../素材庫/選3.jpg width=150 height=150><br>
+ <input type=radio style=width:20;height:20; name=p2 onclick='sel=6;judge(2,0);'><img src=../../素材庫/選3-1.jpg width=30% height=30%>
+ <input type=radio style=width:20;height:20; name=p2 onclick='sel=7;judge(2,1);'><img src=../../素材庫/選3-2.jpg width=30% height=30%><br>
+ <input type=radio style=width:20;height:20; name=p2 onclick='sel=8;judge(2,0);'><img src=../../素材庫/選3-3.jpg width=40% height=30%>   <br>
+<br><br>
+4.下列何者為做出右圖效果之命令碼？<br>
+<img src=../../素材庫/選4.jpg width=500 height=500><br>
+ <input type=radio style=width:20;height:20; name=p3 onclick='sel=9;judge(3,1);'>&lt;iframe&gt;
+ <input type=radio style=width:20;height:20; name=p3 onclick='sel=10;judge(3,0);'>&lt;frameset&gt;&lt;frame&gt;&lt;/frameset&gt;
+ <input type=radio style=width:20;height:20; name=p3 onclick='sel=11;judge(3,0);'>&lt;table&gt;&lt;/table&gt;  <br>
+<br><br>
+5.下列何者為做出右圖效果之命令碼？
+<img src=../../素材庫/選5.jpg width=100 height=60><br>
+ <input type=radio style=width:20;height:20; name=p4 onclick='sel=12;judge(4,0);'>&lt;input type="button"&gt;&lt;/button&gt;
+ <input type=radio style=width:20;height:20; name=p4 onclick='sel=13;judge(4,0);'>&lt;input type="checkbox"&gt;&lt;/button&gt;
+ <input type=radio style=width:20;height:20; name=p4 onclick='sel=14;judge(4,1);'>&lt;input type="radio"&gt;&lt;/button&gt; <br>
+<br><br>
+6.&lt;a href = …&gt;&lt;/a&gt為超連結之命令碼，下列何者不能放入”…”作為超連結使用？<br>
+ <input type=radio style=width:20;height:20; name=p5 onclick='sel=15;judge(5,0);'>貓咪的圖片
+ <input type=radio style=width:20;height:20; name=p5 onclick='sel=16;judge(5,0);'>電子郵件位址
+ <input type=radio style=width:20;height:20; name=p5 onclick='sel=17;judge(5,1);'>以上皆能放入  <br>
+<br><br>
+7.下列何者為無編號列示(List)之命令碼？<br>
+ <input type=radio style=width:20;height:20; name=p6 onclick='sel=18;judge(6,1);'>&lt;ul&gt;&lt;/ul&gt;
+ <input type=radio style=width:20;height:20; name=p6 onclick='sel=19;judge(6,0);'>&lt;ol&gt;&lt;/ol&gt;
+ <input type=radio style=width:20;height:20; name=p6 onclick='sel=20;judge(6,0);'>&lt;li&gt;&lt;/li&gt;  <br>
+<br><br>
+8.下列何者為&lt;table&gt;&lt;/table&gt;與&lt;table border&gt;&lt;/table&gt;之區別？<br>
+ <input type=radio style=width:20;height:20; name=p7 onclick='sel=21;judge(7,1);'>前者沒有外框
+ <input type=radio style=width:20;height:20; name=p7 onclick='sel=22;judge(7,0);'>後者沒有外框
+ <input type=radio style=width:20;height:20; name=p7 onclick='sel=23;judge(7,0);'>沒有區別  <br>
+<br><br>
+9.下列何者為表格儲存格之命令碼？<br>
+ <input type=radio style=width:20;height:20; name=p8 onclick='sel=24;judge(8,0);'>&lttr&gt; &lt/tr&gt; 
+ <input type=radio style=width:20;height:20; name=p8 onclick='sel=25;judge(8,1);'>&lttd&gt; &lt/td&gt; 
+ <input type=radio style=width:20;height:20; name=p8 onclick='sel=26;judge(8,0);'>&ltth&gt; &lt/th&gt;  <br>
+<br><br>
+10.有關iframe和frame的區別何者錯誤？<br>
+ <input type=radio style=width:20;height:20; name=p9 onclick='sel=27;judge(9,0);'>frame不能脫離frameSet單獨使用，iframe可以
+ <input type=radio style=width:20;height:20; name=p9 onclick='sel=28;judge(9,1);'>iframe不能放在body中
+ <input type=radio style=width:20;height:20; name=p9 onclick='sel=29;judge(9,0);'>巢狀在frameSet中的iframe必需放在body中  <br>
+<br><br>
+
+<p id='msg'> </p>
+<span>your score: </span><span id='feedback'></span><br>
+<button style=width:80;height:40; onclick="showhint();">提示: </button>
+<span id='hint1'> </span> <br>
+<button style=width:200;height:40; onclick="suggest();">學習診斷與建議</button>
+<button style=width:160;height:40; onclick="retest();">重新挑戰</button>
+<p id='msg2'> </p>
+<p id='msg3'> </p>
+</font>
+</div>
+</font>
+</body>
+</html>

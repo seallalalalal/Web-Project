@@ -1,0 +1,232 @@
+<html>
+<body bgcolor="#ADADAD">
+<div style=margin:50px 130px 130px 130px>
+<ul>
+	<li>
+		<p><font face="細明體"><a name="28"></a></font><font color="#0000FF"
+		face="細明體">Client pull 方式的動態文件設計</font><font color="#5BA4A4"
+		face="細明體"> </font></p>
+
+		<p><font face="細明體">&lt;META HTTP-EQUIV=&quot;Refresh&quot; CONTENT=1&gt; </font></p>
+
+		<p><font face="細明體">HTTP-EQUIV=&quot;Refresh&quot;屬性值:表示載入文件， </font></p>
+
+		<p><font face="細明體">CONTENT的屬性值:表示載入文件所要延遲時間。 </font></p>
+
+		<p><font face="細明體">&lt;META HTTP-EQUIV=&quot;Refresh&quot; CONTENT=&quot;1; 
+		URL=http://140.131.41.10/index.html&quot;&gt; </font></p>
+
+		<p><font face="細明體">CONTENT屬性除了指定時間外，還要指定別份檔案的URL值。 
+		</font></p>
+	<li>
+		<p><font face="細明體"><a name="29"></a> </font><font color="#0000FF"
+		face="細明體">EMBED </font></p>
+
+		<p><font face="細明體">Netscape的EMBED宣稱可以代替定位錨元素，而直接表示HTML文件上的多媒體物件。 
+		</font></p>
+
+		<p><font face="細明體">&lt;EMBED SRC=&quot;windsurf.avi&quot; WIDTH=200 HEIGHT=180 
+		AUTOSTART=true LOOP=true&gt;<br>
+		</font></p>
+	<li>
+		<p><a name="30"><font face="細明體"></font></a><font color="#0000FF" face="細明體">視窗分割(Frames)</font><font
+		face="細明體">: </font></p>
+
+		<p><font face="細明體">在網頁上做視窗分割，以便在不同視窗格裡展示不同的內容。製作視 
+		</font></p>
+
+		<p><font face="細明體">窗分割時，要把握一個原則，&lt;Frameset&gt;...&lt;/Frameset&gt; 
+		等視窗分割 html </font></p>
+
+		<p><font face="細明體">碼不放在 &lt;body&gt;...&lt;/body&gt; 
+		裡，也就是說單獨置放於 -Html 文件檔裡， </font></p>
+
+		<p><font face="細明體">視窗分割的 Html 
+		語法相當簡單，可以如下方式完成： </font></p>
+
+		<p><font face="細明體">&lt;frameset rows/cols=&quot;n1%,n2%,n3%&quot;...nx%；宣告使用視窗分割。 
+		</font></p>
+
+		<p><font face="細明體">&lt;frame src=&quot;視窗網頁來源位址&quot; name=&quot;視窗名稱-&quot;&gt;；佔 
+		n% </font></p>
+
+		<p><font face="細明體">. </font></p>
+
+		<p><font face="細明體">. </font></p>
+
+		<p><font face="細明體">. </font></p>
+
+		<p><font face="細明體">&lt;frame src=&quot;視窗網頁來源位址&quot; name=&quot;視窗名稱=&quot;&gt;；佔 
+		nx% </font></p>
+
+		<p><font face="細明體">&lt;/frameset&gt;<br>
+		</font></p>
+
+		<p><font face="細明體">註：1.參數 rows；是將視窗做水平分割，而 cols 
+		是做垂直分割，分割的 </font></p>
+
+		<p><font face="細明體">比例由其值做決定。如 rows=&quot;20%，20%，60%&quot;，表將瀏覽器視窗水平 
+		</font></p>
+
+		<p><font face="細明體">分割成 3 分，分別佔 20%，20%，60%。 </font></p>
+
+		<p><font face="細明體">2.分割多少個視窗，就需多少個 &lt;frame src=&gt; Tag 
+		與之對應。<br>
+		</font>
+
+		<ol>
+		  <li><font face="細明體">frameset： </font></li>
+		</ol>
+
+		<p><font face="細明體">.是frameset的主容器(container)，結合cols及rows，定義垂直與水平窗框之數量 
+		</font></p>
+
+		<p><font face="細明體">.將視窗依垂直與水平方向分割成多個窗框(窗格frame)一窗框可顯示個別的URL 
+		</font></p>
+
+		<p><font face="細明體">.Frameset與Body二者具互斥性 </font>
+
+		<ol>
+		  <li><font face="細明體">cols屬性：(columns)定義水平方向視窗中窗框之數量及所佔之大小或比例 
+			</font></li>
+		  <li><font face="細明體">Rows屬：定義垂直方向中分割視窗之數量及所佔大小或比例 
+			</font></li>
+		</ol>
+
+		<p><font face="細明體">例：每窗格各佔水平50%</font></p>
+
+		<table border="1" bordercolor="#000000">
+		  <tr>
+			<td width="279"><font face="細明體">＜Frameset cols=&quot;*,*&quot;&gt; </font><p><font
+			face="細明體">＜Frame src=&quot;A1.htm&quot;&gt;</font></p>
+			<p><font face="細明體">＜Frame cols=&quot;A2,htm&quot;&gt;</font></p>
+			<p><font face="細明體">＜/Frameset&gt; </font></td>
+			<td width="279"><font face="細明體">＜Frameset cols=&quot;1,1&quot;&gt;</font><p><font
+			face="細明體">＜Framet src=&quot;A1.htm&quot;&gt;</font></p>
+			<p><font face="細明體">＜Framet cols=&quot;A2.htm&quot;&gt;</font></p>
+			<p><font face="細明體">＜/Frameset&gt; </font></td>
+		  </tr>
+		</table>
+
+		<ol>
+		  <li><font face="細明體">frame：定義各窗框之URL﹐窗框名稱 </font></li>
+		</ol>
+
+		<p><font face="細明體">&lt;Frame src=&quot;URL&quot; Name=&quot;framename&quot;&gt; </font></p>
+
+		<p><font face="細明體">例：窗格各佔佔1：２：３ </font></p>
+
+		<p><font face="細明體">&lt;frameset rows=&quot;1,2,3&quot;&gt; </font></p>
+
+		<p><font face="細明體">&lt;frame src=&quot;A1.htm&quot;&gt; </font></p>
+
+		<p><font face="細明體">&lt;frame src=&quot;A2.htm&quot;&gt; </font></p>
+
+		<p><font face="細明體">&lt;frame srcf=&quot;A3.htm&quot;&gt; </font></p>
+
+		<p><font face="細明體">&lt;/frameset&gt; </font></p>
+
+		<p><font face="細明體">第一列可改為&lt;frameset rows=&quot;1*,2*,3*&quot;&gt;<br>
+		</font></p>
+
+		<p><font face="細明體">例：以比例分配窗框大小 </font></p>
+
+		<p><font face="細明體">&lt;frameset Rows=&quot;30%,40%,30%&quot;&gt; </font></p>
+
+		<p><font face="細明體">例：第二窗框佔150點﹐其他二個平分視窗 </font></p>
+
+		<p><font face="細明體">&lt;frameset cols=&quot;*,150,*&quot;&gt; </font></p>
+
+		<p><font face="細明體">例：第一窗框佔150點﹐第二窗框佔100﹐其他給第三窗框 
+		</font></p>
+
+		<p><font face="細明體">&lt;frameset cols=&quot;150﹐100﹐*&quot;&gt; </font>
+
+		<ol>
+		  <li><font face="細明體">設定窗框邊界與文件之距離 </font></li>
+		</ol>
+
+		<p><font face="細明體">marginwidth：設定窗框之文件內容與窗框左右邊界之距離 
+		</font></p>
+
+		<p><font face="細明體">marginheight：設定窗框之文件內容與窗框上下邊界之距離 
+		</font>
+
+		<ol>
+		  <li><font face="細明體">scrolling：捲動軸之設定 </font></li>
+		</ol>
+
+		<p><font face="細明體">有三種值<b>YES﹑NO﹑AUTO</b>(預設) </font>
+
+		<ol>
+		  <li><font face="細明體">noresize：設為不可變動之框邊 </font></li>
+		</ol>
+
+		<p><font face="細明體">例: Frameset<br>
+		</font></p>
+
+		<table border="1" bordercolor="#000000">
+		  <tr>
+			<td colspan="2" width="206"><font face="細明體">A1.htm</font></td>
+		  </tr>
+		  <tr>
+			<td width="134"><font face="細明體"><br>
+			</font><p><font face="細明體">A2.htm </font></td>
+			<td width="72"><font face="細明體"><br>
+			A3.htm </font></td>
+		  </tr>
+		</table>
+
+		<p><font face="細明體">&lt;Frameset rows=&quot;100,*&quot;&gt; </font></p>
+
+		<p><font face="細明體">&lt;Frame src=&quot;A1.htm&quot;&gt; </font></p>
+
+		<p><font face="細明體">&lt;Frameset cols=&quot;150,*&quot;&gt; </font></p>
+
+		<p><font face="細明體">&lt;Frame src=&quot;A2.htm&quot;&gt; </font></p>
+
+		<p><font face="細明體">&lt;Frame src=&quot;A3.htm&quot;&gt; </font></p>
+
+		<p><font face="細明體">&lt;/frameset&gt; </font></p>
+
+		<p><font face="細明體">&lt;/ftameset&gt;<br>
+		</font></p>
+
+		<p><font face="細明體">例: </font></p>
+
+		<p><font face="細明體">&lt;frameset cols=&quot;*,2*&quot;&gt; </font></p>
+
+		<p><font face="細明體">&lt;frame src=&quot;mapdemo2.htm&quot; scrolling=yes 
+		noresize&gt; </font></p>
+
+		<p><font face="細明體">&lt;frameset rows=&quot;20%,80%&quot;&gt; </font></p>
+
+		<p><font face="細明體">&lt;frame src=&quot;rect-1.htm&quot; scrolling=NO MARGINWIDTH=0 
+		MARGINHEIGHT=0 &gt; </font></p>
+
+		<p><font face="細明體">&lt;frame src=&quot;poly.htm&quot; name=&quot;demo&quot; 
+		SCROLLING=NO noresize&gt; </font></p>
+
+		<p><font face="細明體">&lt;/frameset&gt; </font></p>
+
+		<p><font face="細明體">&lt;/frameset&gt; </font></p>
+
+		<p><font face="細明體">&lt;noframe&gt; </font></p>
+
+		<p><font face="細明體">no frame </font></p>
+
+		<p><font face="細明體">&lt;/noframe&gt; </font></p>
+
+		<p><font face="細明體">.窗框的命名 </font></p>
+
+		<p><font face="細明體">_blank 顯示一個未命名的新視窗 </font></p>
+
+		<p><font face="細明體">_self 顯示在與超鏈結定位錨位址相同的視窗 </font></p>
+
+		<p><font face="細明體">_parent 顯示在FRAMESET的前一份文件的視窗\ </font></p>
+
+		<p><font face="細明體">_top 顯示在與超鏈結定位錨位址相同的視窗<br>
+		</font></p>
+</div>
+</body>
+</html>

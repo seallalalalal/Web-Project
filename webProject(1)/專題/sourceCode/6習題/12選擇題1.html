@@ -1,0 +1,135 @@
+<html>
+<script>
+var sel=-1;
+var score = 0;
+var record = 1;
+var question = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var feedback = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var Lsource = ["<a href=../2html概說.html>html概說</a>",
+				"<a href=../3html命令類型.html>命令類型</a>",
+				"<a href=../4html黨基本構造.html>html黨基本構造</a>",
+				"<a href=../5命令介紹/1分隔標籤.html>分隔標籤</a>",
+				"<a href=../5命令介紹/4特殊字元.html>特殊字元</a>",
+				"<a href=../5命令介紹/3文字標籤.html>文字標籤</a>",
+				"<a href=../5命令介紹/5影像標籤.html>影像標籤</a>",
+				"<a href=../5命令介紹/3文字標籤.html>文字標籤</a>",
+				"<a href=../5命令介紹/6背景標籤.html>背景標籤</a>",
+				"<a href=../5命令介紹/3文字標籤.html>文字標籤</a>",];
+var hint =["correct", "html的中文意思是『超文件標記語言』", "html的中文意思是『超文件標記語言』",
+		"<p>標籤是一個雙標籤","<font>標籤是一個雙標籤","correct",
+		"correct","標示段落的程式碼為<p>","確實可以讓程式看起來有結構，但主要功能並不是這個",
+		"寬度的英文是width","應該是align而不是alifn","correct",
+		"空白的英文為none breaking space","空白的英文為none breaking space","correct",
+		"correct","要選錯誤的喔，注意標籤的順序標籤","要選錯誤的喔，注意標籤的順序標籤",
+		"correct","圖片會靠左對齊","文字會環繞喔",
+		"程式碼錯囉，再想想看","程式碼錯囉，再想想看","correct",
+		"程式碼錯囉，再想想看","correct","程式碼錯囉，再想想看",
+		"這是文字粗體的程式碼","這是文字底線的程式碼","correct", ];
+function showhint() {
+ if (sel>=0)
+  document.getElementById("hint1").innerHTML='<font color=red>'+hint[sel]+'</font>';
+ }
+
+function judge(){
+	if(record == 1){
+		for(var k = 0; k < 10; k++){
+			if(question[k] == 1){
+				score  = score + 10;
+			}
+			else{
+				feedback[k] = 1;
+			}
+		}
+		document.getElementById("showScore").innerHTML = score;
+	}
+	record = -1;
+ }
+function suggest() {
+ var advice='建議學習:<br>';
+ for(var i=0;i<=10;i++)
+ if (record[i]>1){
+    advice=advice+Lsource[i]+'<br>';
+    }
+ document.getElementById("msg3").innerHTML=advice;
+}
+
+function retest(){
+ sel=-1;
+ totalsc=0;
+ for(var i=0;i<=2;i++)
+   question[i]=score=0;
+ document.getElementById("feedback").innerHTML="";
+ document.getElementById("hint1").innerHTML='';
+ document.getElementById("msg3").innerHTML='';
+ }
+ function explain(){
+	
+	
+ }
+</script>
+<body bgcolor = "#ADADAD">
+<font size=3>
+<div style=margin:50px 130px 130px 130px>
+<center><h1>選擇題1</h1></center>
+<ol>
+<p><li>html全稱?</li><br>
+ <input type=radio style=width:20;height:20; name=p0 onclick='sel=0;question[0] = 1;'>hyper text markup language<br>
+ <input type=radio style=width:20;height:20; name=p0 onclick='sel=1;question[0] = 0;'>higher tastic makeup language<br>
+ <input type=radio style=width:20;height:20; name=p0 onclick='sel=2;question[0] = 0;'>hot trend makeup language <br>
+</p>
+<p><li>以下何者為單標記命令?<br></li>
+ <input type=radio style=width:20;height:20; name=p1 onclick='sel=3;question[1] = 0;'> &lt; p &gt;
+ <input type=radio style=width:20;height:20; name=p1 onclick='sel=4;question[1] = 0;'>&lt; font &gt;
+ <input type=radio style=width:20;height:20; name=p1 onclick='sel=5;question[1] = 1;'>&lt; br &gt;  <br>
+</p>
+<p><li>&lt;body&gt;...&lt/body&gt;的用途?<br></li>
+ <input type=radio style=width:20;height:20; name=p2 onclick='sel=6;question[2] = 1;'>標示文件的主體
+ <input type=radio style=width:20;height:20; name=p2 onclick='sel=7;question[2] = 0;'>標示段落
+ <input type=radio style=width:20;height:20; name=p2 onclick='sel=8;question[2] = 0;'>為了讓程式碼看起來有結構<br>
+</p>
+<p><li>欲產生一條一條置中對齊、寬度30的水平線，下列程式碼和者正確?<br></li>
+ <input type=radio style=width:20;height:20; name=p3 onclick='sel=9;question[3] = 0;'>&lt; hr length = 30 alifn = right &gt
+ <input type=radio style=width:20;height:20; name=p3 onclick='sel=10;question[3] = 0;'>&lt; hr width  = 30 alifn = right &gt;
+ <input type=radio style=width:20;height:20; name=p3 onclick='sel=11;question[3] = 1;'>&lt; hr width = 30 align = right &gt;  <br>
+</p>
+<p><li>下列程式碼何者能輸出一個空白字元?<br>
+ <input type=radio style=width:20;height:20; name=p4 onclick='sel=12;question[4] = 0;'>&amp;lt;
+ <input type=radio style=width:20;height:20; name=p4 onclick='sel=13;question[4] = 1;'>&amp;nbsp;
+ <input type=radio style=width:20;height:20; name=p4 onclick='sel=14;question[4] = 0;'>&amp;gt;<br>
+</p>
+<p><li>如欲產生粗體且有底線之文字，下列何者錯誤?<br></li>
+ <input type=radio style=width:20;height:20; name=p5 onclick='sel=15;question[5] = 1;'>&lt; B &gt; &lt; U &gt;文字&lt; /B &gt; &lt; /U &gt;
+ <input type=radio style=width:20;height:20; name=p5 onclick='sel=16;question[5] = 0;'>&lt; U &gt; &lt; B &gt;文字&lt; /B &gt; &lt; /U &gt; 
+ <input type=radio style=width:20;height:20; name=p5 onclick='sel=17;question[5] = 0;'>&lt; B &gt; &lt; U &gt;文字&lt; /U &gt; &lt; /B &gt;  <br>
+</p>
+<p><li>&lt; img src = elephant.jpg align = left &gt; 這段程式碼的意思為?<br></li>
+ <input type=radio style=width:20;height:20; name=p6 onclick='sel=18;question[6] = 1;'>圖片在左而文字環繞
+ <input type=radio style=width:20;height:20; name=p6 onclick='sel=19;question[6] = 0;'>圖片在右而文字環繞
+ <input type=radio style=width:20;height:20; name=p6 onclick='sel=20;question[6] = 0;'>圖片在左而文字不環繞  <br>
+</p>
+<p><li>欲使產生的字體為紅色，下列程式碼何者正確?<br></li>
+ <input type=radio style=width:20;height:20; name=p7 onclick='sel=21;question[7] = 0;'>&lt;font = red &gt; &lt; /font&gt;
+ <input type=radio style=width:20;height:20; name=p7 onclick='sel=22;question[7] = 0;'>&lt;color = red &gt; &lt;/color&gt;
+ <input type=radio style=width:20;height:20; name=p7 onclick='sel=23;question[7] = 1;'>&lt;font color = #ff0000 &gt; &lt;/font&gt; <br>
+</p>
+<p><li>欲改變整個網頁的背景顏色，下列程式何者正確?<br></li>
+ <input type=radio style=width:20;height:20; name=p8 onclick='sel=24;question[8] = 0;'>&lt;color = red&gt;&lt;/color&gt;
+ <input type=radio style=width:20;height:20; name=p8 onclick='sel=25;question[8] = 1;'>&lt;body bgcolor = red&gt; &lt;/body&gt;
+ <input type=radio style=width:20;height:20; name=p8 onclick='sel=26;question[8] = 0;'>&lt;bgcolor = #ff0000&gt; &lt;/bgcolor&gt;  <br>
+</p>
+<p><li>下列哪個標籤能讓字體變成斜體?<br></li>
+ <input type=radio style=width:20;height:20; name=p9 onclick='sel=27;question[9] = 0;'>&lt;B&gt;
+ <input type=radio style=width:20;height:20; name=p9 onclick='sel=28;question[9] = 0;'>&lt;U&gt;
+ <input type=radio style=width:20;height:20; name=p9 onclick='sel=29;question[9] = 1;'>&lt;I&gt;  <br>
+</p>
+
+<p id='msg'> </p>
+<span>your score: </span><span id='showScore'></span><br>
+<button onclick = "judge()">交卷</button><button onclick = "explain()">顯示詳解</button><button onclick="suggest();">學習診斷</button>
+<button onclick="retest();">重新挑戰</button>
+<p id='msg3'> </p>
+</font>
+</div>
+</font>
+</body>
+</html>

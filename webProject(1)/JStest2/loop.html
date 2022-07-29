@@ -1,0 +1,1984 @@
+<!-- 迴圈模擬 -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>迴圈模擬</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p style="font-size:18px; display:inline">迴圈模擬</p> 
+           
+        
+            <form name="choose_func" id="choose_func">
+                範例：
+                    <input type="radio" name="group1" value="func_1"> GCD(m,n)<br>
+             　　　 <input type="radio" name="group1" value="func_2"> 輸入n，判斷迴文<br>
+             　　　 <input type="radio" name="group1" value="func_3"> 輸入n，十進位轉二進位<br>
+             　　　 <input type="radio" name="group1" value="func_4"> 1+2+3+...+n<br>
+             　　　 <input type="radio" name="group1" value="func_5"> 1+3+5+...+n<br>
+             　　　 <input type="radio" name="group1" value="func_6"> 1*2*3*...*n<br>  
+             　　　 <input type="radio" name="group1" value="func_7"> 執行n次空迴圈<br>  
+            </form>
+        
+            <form name="choose_mode" id="choose_loop">
+                採用迴圈：
+                    <input type="radio" id="choose_loop_1" name="group4" value="mode_1"> for
+                    <input type="radio" id="choose_loop_2" name="group4" value="mode_2"> while
+                    <input type="radio" id="choose_loop_3" name="group4" value="mode_3"> do-while
+            </form>
+        
+            <form>
+                輸入終值：
+                        m：<input  style="width:70px" type="text"  id="user_input_m"> 
+                        n：<input  style="width:70px" type="text"  id="user_input_n"> 
+            </form>        
+       
+            <form name="choose_mode" id="choose_mode">
+                模式：
+                    <input type="radio" name="group3" value="mode_1"> step
+                    <input type="radio" name="group3" value="mode_2"> animation
+                    <input type="radio" name="group3" value="mode_3"> run-all
+            </form>
+        
+            <form name="choose_speed" id="choose_speed">
+                速度：
+                    <input type="radio" name="group2" value="speed_1"> 快
+                    <input type="radio" name="group2" value="speed_2"> 中
+                    <input type="radio" name="group2" value="speed_3"> 慢              
+            </form>    
+ 
+           <form>
+                <button type="button" value="start" onclick="start()"> 開始處理 </button>
+                <button type="button" value="next"  onclick="next()" > 下一步 </button>               
+                <button type="button" value="clear" onclick="restart()"> 清除所有欄位 </button>
+				<button type="button" value="back"	onclick="window.location.href='../index.html'">回到首頁</button>
+           </form>
+       
+       <canvas id="canvas_recur" width="550" height="400"></canvas>
+       <canvas id="canvas_picture" width="600" height="400"></canvas><br>
+
+       變數過程之改變：<br>
+             i <input readonly="readonly" style="width:60px" type="text" id="input_i" >
+       　count <input readonly="readonly" style="width:60px" type="text" id="input_c" >
+       　    m <input readonly="readonly" style="width:60px" type="text" id="input_m" >        
+       　    n <input readonly="readonly" style="width:60px" type="text" id="input_n" >
+       　    s <input readonly="readonly" style="width:90px" type="text" id="input_s" ><br><br>
+       
+       目前處理：<br>
+       <textarea cols="100" rows="4" readonly="readonly" id="process_1"></textarea><br>
+       全部處理過程：<br>
+       <textarea cols="100" rows="15" readonly="readonly" id="process_2"></textarea>
+       
+
+       <script>
+           var count_next = 0;  
+           var count_anime = 0; 
+           var interval_ID;
+
+           var user_func = 0;     // gcd:1,pal:2, ...
+           var user_mode = 0;     // step:1, animation:2, run-all:3
+           var user_loop = 0;
+           var user_language = 1;
+           
+           var set_delay = 0;     // speed
+           var step_mode_start = false;           
+           var recur_end = false;      // end of a function
+
+           var record_all = [];   // record sentence of every step
+           var record_i = [];
+           var record_c = [];
+           var record_m = [];
+           var record_n = [];
+           var record_s = [];
+           
+           // show text                    
+           var  process_1 = document.getElementById("process_1"); 
+           var  process_2 = document.getElementById("process_2"); 
+           
+           // canvas
+           var canvas1 = document.getElementById('canvas_recur');
+           var recur = canvas1.getContext('2d');
+           var canvas2 = document.getElementById('canvas_picture');
+           var picture = canvas2.getContext('2d');                
+           
+           // i,m,n,s
+           var  show_i = document.getElementById("input_i");
+           var  show_c = document.getElementById("input_c");
+           var  show_m = document.getElementById("input_m");
+           var  show_n = document.getElementById("input_n");
+           var  show_s = document.getElementById("input_s");
+           
+           
+           function start(){
+                clearInterval(interval_ID);
+               
+                // radio
+                var     func = document.getElementById("choose_func");
+                var    speed = document.getElementById("choose_speed");
+                var     mode = document.getElementById("choose_mode");
+                var     loop = document.getElementById("choose_loop");
+                
+                
+                // user input data
+                var input_m    = document.getElementById("user_input_m").value;               
+                var input_n    = document.getElementById("user_input_n").value;               
+
+
+                
+                // alert: choose mode
+                if(mode.group3[0].checked)
+                    user_mode = 1;
+                else if(mode.group3[1].checked)
+                    user_mode = 2;
+                else if(mode.group3[2].checked)
+                    user_mode = 3;
+                else{
+                    alert("請選擇模式");
+                    return;
+                }
+                
+                // alert: choose loop
+                if(loop.group4[0].checked)
+                    user_loop = 1;
+                else if(loop.group4[1].checked)
+                    user_loop = 2;
+                else if(loop.group4[2].checked)
+                    user_loop = 3;
+                else{
+                    alert("請選擇採用迴圈");
+                    return;
+                }
+                
+                // alert: push next to continue
+                if(step_mode_start == true){
+                    alert("請點擊下一步以繼續");
+                    return;
+                }
+       
+                // alert: never push clear after end of the program
+                if(recur_end == true){
+                        alert("執行結束後，請按清除所有欄位");
+                        return;                    
+                }
+                
+                // alert: never set speed when choosing animation mode / set delay speed
+                if(user_mode == 2){
+                    // user does not choose speed
+                    if(speed.group2[0].checked == "" && speed.group2[1].checked == "" && speed.group2[2].checked == ""){
+                        alert("請選擇速度");
+                        return;
+                    }
+                    else{ // set speed
+                        if(speed.group2[0].checked) // slow
+                            set_delay = 1000;
+                        else if(speed.group2[1].checked) // medium    
+                            set_delay = 2000;
+                        else if(speed.group2[2].checked) // fast                            
+                            set_delay = 3000;
+                    }
+                }
+
+                create_border();
+                
+                if(func.group1[0].checked ){
+                    if(input_m == "" || input_n == ""){
+                        alert("未輸入終值");
+                        return;
+                    }
+                    // alert: enter positive integer
+                    if( Math.floor(input_n) != input_n || input_n <= 0 ||  Math.floor(input_m) != input_m || input_m <= 0){
+                        alert("m,n請輸入正整數");
+                        return;
+                    }   
+                  
+                    user_func = 1;
+                    draw_code();
+                    gcd(input_m,input_n);
+                    show_result_mode();  
+                }
+                
+                else if(func.group1[1].checked){
+                    if(input_n == ""){
+                        alert("未輸入終值");
+                        return;
+                    }
+
+                    user_func = 2;     
+                    draw_code();
+                    pal(input_n);
+                    show_result_mode();  
+                }
+                                
+                else if(func.group1[2].checked){
+                    if(input_n == ""){
+                        alert("未輸入終值");
+                        return;
+                    }
+                    // alert: enter positive integer
+                    if( Math.floor(input_n) != input_n || input_n <= 0 ){
+                        alert("n請輸入正整數");
+                        return;
+                    }                       
+
+                    user_func = 3;
+                    draw_code();
+                    OTOB(input_n);
+                    show_result_mode();  
+                }
+                               
+                else if(func.group1[3].checked){
+                    if(input_n == ""){
+                        alert("未輸入終值");
+                        return;
+                    }
+                    // alert: enter positive integer
+                    if( Math.floor(input_n) != input_n || input_n <= 0 ){
+                        alert("n請輸入正整數");
+                        return;
+                    }   
+
+                    user_func = 4;
+                    draw_code();
+                    sumd(input_n);
+                    show_result_mode();  
+                }
+                               
+                else if(func.group1[4].checked){
+                    if(input_n == ""){
+                        alert("未輸入終值");
+                        return;
+                    }
+                    // alert: enter positive integer
+                    if( Math.floor(input_n) != input_n || input_n <= 0 ){
+                        alert("n請輸入正整數");
+                        return;
+                    }   
+                    if(input_n % 2 == 0){
+                        alert("奇數累加需填入奇數");
+                        return;                       
+                    } 
+ 
+                    user_func = 5;
+                    draw_code();
+                    sum2(input_n);
+                    show_result_mode();  
+                }
+                               
+                else if(func.group1[5].checked){
+                    if(input_n == ""){
+                        alert("未輸入終值");
+                        return;
+                    }
+                    // alert: enter positive integer
+                    if( Math.floor(input_n) != input_n || input_n <= 0 ){
+                        alert("n請輸入正整數");
+                        return;
+                    }   
+
+                    user_func = 6;
+                    draw_code();
+                    rank(input_n);
+                    show_result_mode();  
+                }
+                
+                else if(func.group1[6].checked){
+                    if(input_n == ""){
+                        alert("未輸入n值");
+                        return;
+                    }
+                    // alert: enter positive integer
+                    if( Math.floor(input_n) != input_n || input_n <= 0 ){
+                        alert("n請輸入正整數");
+                        return;
+                    }   
+                    if(user_loop != 1){
+                        alert("此範例只能使用for迴圈");
+                        return;
+                    }
+                    
+                    user_func = 7;
+                    draw_code();
+                    empty(input_n);
+                    show_result_mode();  
+                }
+                
+           }
+ 
+           function gcd(m,n){
+               var gcd = 0;
+               var count = 1;
+               
+               if(user_loop == 1){
+                   gcd = n;
+                   for(var i = m % n; m % n != 0; i = m % n){
+                        record_i[count-1] = i;
+                        record_s[count-1] = gcd;
+                        record_m[count-1] = m;
+                        record_n[count-1] = n;
+                        
+                        record_all[count-1] = "i != 0 ，繼續執行for迴圈，設gcd = " + gcd + "\n";
+  
+                        gcd = m % n;
+                        m = n;
+                        n = gcd;
+                        
+                        count++;
+                   }
+                   record_i[count-1] = i;
+                   record_s[count-1] = gcd;
+                   record_m[count-1] = m;
+                   record_n[count-1] = n;
+                   record_all[count-1] = "迴圈結束，gcd = " + gcd + "\n";
+               }
+               else if(user_loop == 2){
+                    gcd = n;
+                    
+                    while(m % n != 0){
+                        record_s[count-1] = gcd;
+                        record_m[count-1] = m;
+                        record_n[count-1] = n;
+                        record_all[count-1] = m + " % " + n + " != 0 ，繼續執行while迴圈，設gcd = " + gcd + "\n";
+                        
+                        gcd = m % n;
+                        m = n;
+                        n = gcd;
+                        count++;
+                    }
+                    record_s[count-1] = gcd;
+                    record_m[count-1] = m;
+                    record_n[count-1] = n;
+                    record_all[count-1] = m + " % " + n + " == 0 ，迴圈結束，gcd = " + gcd + "\n";
+               }
+               else if(user_loop == 3){
+                   gcd = n;
+                   do{
+                        record_s[count-1] = gcd;
+                        record_m[count-1] = m;
+                        record_n[count-1] = n;
+                     
+                        if(count-1 == 0)
+                           record_all[count-1] = m + " % " + n + " != 0 ，第一次執行do-while迴圈，設gcd = " + gcd + "\n";
+                        else
+                           record_all[count-1] = m + " % " + n + " != 0 ，繼續執行do-while迴圈，設gcd = " + gcd + "\n";
+                        
+                        if(m % n == 0) // avoid m / 0
+                            break;
+                        
+                        gcd = m % n;
+                        m = n;
+                        n = gcd;
+
+                        count++;
+                   }while(m % n != 0);
+                    record_s[count-1] = gcd;
+                    record_m[count-1] = m;
+                    record_n[count-1] = n;
+                    record_all[count-1] = m + " % " + n + " == 0 ，迴圈結束，gcd = " + gcd + "\n";
+               }
+           }
+
+    
+           function pal(str){
+               var count = 1;
+               var palindrome = true;
+               if(user_language == 1){
+                    if(user_loop == 1){
+                        for(var i = str; i.length > 1 && palindrome == true; i = str){
+                            if(str.charAt(0) != str.charAt(str.length-1))
+                                palindrome = false;
+                            record_s[count-1] = palindrome;
+                            record_n[count-1] = str;
+                            record_all[count-1] = "n = " + str + "，繼續執行for迴圈，palindrome = " + palindrome + "\n";
+
+                            str = str.slice(1,str.length-1);
+                            count++;
+                        }
+                        record_s[count-1] = palindrome;
+                        record_n[count-1] = str;
+                        record_all[count-1] = "迴圈結束\n";
+                    }
+                    else if(user_loop == 2){
+                        while(str.length > 1 && palindrome == true){
+                            if(str.charAt(0) != str.charAt(str.length-1))
+                                palindrome = false;
+                            record_s[count-1] = palindrome;
+                            record_n[count-1] = str;
+                            record_all[count-1] = "n = " + str + "，繼續執行while迴圈，palindrome = " + palindrome + "\n";
+
+                            str = str.slice(1,str.length-1);
+                            count++;
+                        }
+                        record_s[count-1] = palindrome;
+                        record_n[count-1] = str;
+                        record_all[count-1] = "迴圈結束\n";
+                    }
+                    else if(user_loop == 3){
+                        do{
+                            if(str.charAt(0) != str.charAt(str.length-1))
+                                palindrome = false;
+                            record_s[count-1] = palindrome;
+                            record_n[count-1] = str;
+                            if(count == 1)
+                                record_all[count-1] = "n = " + str + "，第一次執行do-while迴圈，palindrome = " + palindrome + "\n";
+                            else
+                                record_all[count-1] = "n = " + str + "，繼續執行do-while迴圈，palindrome = " + palindrome + "\n";
+
+                            str = str.slice(1,str.length-1);
+                            count++;
+                        }while(str.length > 1 && palindrome == true);
+                        record_s[count-1] = palindrome;
+                        record_n[count-1] = str;
+                        record_all[count-1] = "迴圈結束\n";
+                    }
+                }
+                else if(user_language == 2){
+                    if(user_loop == 1){
+                        for (var i=0, j=str.length-1; palindrome == true && i<j; ++i, --j){
+                            if(str.charAt(i) != str.charAt(j))
+                                palindrome = false;
+                            
+                            record_i[count-1] = i;
+                            record_s[count-1] = palindrome;
+                            record_n[count-1] = str;
+                            record_all[count-1] = "n = " + str + "，執行for迴圈，判斷第" + i + "," + j + "個字元是否相同，得到結果: palindrome = " + palindrome + "\n";
+
+                            count++;                            
+                        }
+                        record_i[count-1] = i;
+                        record_s[count-1] = palindrome;
+                        record_n[count-1] = str;
+                        record_all[count-1] = "迴圈結束\n";
+                    }
+                    else if(user_loop == 2){
+                        i=0;
+                        j=str.length-1;
+                        while(palindrome == true && i < j){
+                            if (str[i] != str[j])
+                                palindrome = false;                            
+                            
+                            record_i[count-1] = i;
+                            record_s[count-1] = palindrome;
+                            record_n[count-1] = str;
+                            record_all[count-1] = "n = " + str + "，繼續執行while迴圈，判斷第" + i + "," + j + "個字元是否相同，得到結果: palindrome = " + palindrome + "\n";
+
+                            i++;
+                            j--;                            
+                            count++;       
+                        }
+                        record_i[count-1] = i;
+                        record_s[count-1] = palindrome;
+                        record_n[count-1] = str;
+                        record_all[count-1] = "迴圈結束\n";
+                    }
+                    else if(user_loop == 3){
+                        i=0;
+                        j=str.length-1;
+                        do{
+                            if (str[i] != str[j])
+                                palindrome = false;                            
+                            
+                            record_i[count-1] = i;
+                            record_s[count-1] = palindrome;
+                            record_n[count-1] = str;
+                            if(count-1==0)
+                                record_all[count-1] = "n = " + str + "，第一次執行do-while迴圈，判斷第" + i + "," + j + "個字元是否相同，得到結果: palindrome = " + palindrome + "\n";
+                            else
+                                record_all[count-1] = "n = " + str + "，繼續執行do-while迴圈，判斷第" + i + "," + j + "個字元是否相同，得到結果: palindrome = " + palindrome + "\n";
+                            i++;
+                            j--;                            
+                            count++;  
+                        }while(palindrome == true && i < j);
+                        record_i[count-1] = i;
+                        record_s[count-1] = palindrome;
+                        record_n[count-1] = str;
+                        record_all[count-1] = "迴圈結束\n";
+                    }
+                }
+           }
+           
+
+           function OTOB(n){
+               var binary = "";
+               var binary_c = "";
+               var count = 1;
+               
+               if(user_loop == 1){
+                   for(var i = n; i != 0 ; i = Math.floor(i/2)){
+                        if(i % 2 == 1){
+                            if(user_language == 1)
+                                record_all[count-1] = "i = " + i + "，繼續執行for迴圈，binary = \"1\" + " + binary + "\n";
+                            else if(user_language == 2)
+                                record_all[count-1] = "i = " + i + "，繼續執行for迴圈，binary = " + binary_c + " + \"1\"\n";
+
+                            binary = "1" + binary;
+                            binary_c = binary.split("").reverse().join("");
+                        }
+                        else{
+                            if(user_language == 1)
+                                record_all[count-1] = "i = " + i + "，繼續執行for迴圈，binary = \"0\" + " + binary + "\n";
+                            else if(user_language == 2)
+                                record_all[count-1] = "i = " + i + "，繼續執行for迴圈，binary = " + binary_c + " + \"0\"\n";
+                            
+                            binary = "0" + binary;
+                            binary_c = binary.split("").reverse().join("");
+                        }
+                        record_i[count-1] = i;
+                        if(user_language == 1)
+                            record_s[count-1] = binary;
+                        else if(user_language == 2)
+                            record_s[count-1] = binary_c;
+                        record_n[count-1] = n;
+                        count++;
+                   }
+                   record_i[count-1] = i;
+                   record_s[count-1] = binary;
+                   record_n[count-1] = n;
+                   record_all[count-1] = "i = 0，迴圈結束，binary = " + binary + "\n";
+               }
+               else if(user_loop == 2){
+                    while(n != 0){
+                        if(n % 2 == 1){
+                            if(user_language == 1)
+                                record_all[count-1] = "n = " + n + "，繼續執行while迴圈，binary = \"1\" + " + binary + "\n";
+                            else if(user_language == 2)
+                                record_all[count-1] = "n = " + n + "，繼續執行while迴圈，binary = " + binary_c + " + \"1\"\n";
+
+                            binary = "1" + binary;
+                            binary_c = binary.split("").reverse().join("");
+                        }
+                        else{
+                            if(user_language == 1)
+                                record_all[count-1] = "n = " + n + "，繼續執行while迴圈，binary = \"0\" + " + binary + "\n";
+                            else if(user_language == 2)
+                                record_all[count-1] = "n = " + n + "，繼續執行while迴圈，binary = " + binary_c + " + \"0\"\n";
+                            
+                            binary = "0" + binary;
+                            binary_c = binary.split("").reverse().join("");
+                        }
+                        if(user_language == 1)
+                            record_s[count-1] = binary;
+                        else if(user_language == 2)
+                            record_s[count-1] = binary_c;
+                        
+                        record_n[count-1] = n;
+                        n = Math.floor(n/2);
+                        count++;
+                    }    
+                    record_s[count-1] = binary;
+                    record_n[count-1] = n;
+                    record_all[count-1] = "n = 0，迴圈結束，binary = " + binary + "\n";
+               }
+               else if(user_loop == 3){
+                   do{
+                        if(n % 2 == 1){
+                            if(count-1==0){
+                                if(user_language == 1)
+                                    record_all[count-1] = "n = " + n + "，第一次執行do-while迴圈，binary = \"1\" + " + binary + "\n";
+                                else if(user_language == 2)
+                                    record_all[count-1] = "n = " + n + "，第一次執行do-while迴圈，binary = " + binary_c + " + \"1\"\n";
+                            }
+                            else{
+                                if(user_language == 1)
+                                    record_all[count-1] = "n = " + n + "，繼續執行do-while迴圈，binary = \"1\" + " + binary + "\n";
+                                else if(user_language == 2)
+                                    record_all[count-1] = "n = " + n + "，繼續執行do-while迴圈，binary = " + binary_c + " + \"1\"\n";                                
+                            }
+                            binary = "1" + binary;
+                            binary_c = binary.split("").reverse().join("");
+                        }
+                        else{
+                            if(count-1==0){
+                                if(user_language == 1)
+                                    record_all[count-1] = "n = " + n + "，第一次執行do-while迴圈，binary = \"0\" + " + binary + "\n";
+                                else if(user_language == 2)
+                                    record_all[count-1] = "n = " + n + "，第一次執行do-while迴圈，binary = " + binary_c + " + \"0\"\n";
+                                }
+                            else{
+                                if(user_language == 1)
+                                    record_all[count-1] = "n = " + n + "，繼續執行do-while迴圈，binary = \"0\" + " + binary + "\n";
+                                else if(user_language == 2)
+                                    record_all[count-1] = "n = " + n + "，繼續執行do-while迴圈，binary = " + binary_c + " + \"0\"\n";
+                            }
+                            binary = "0" + binary;
+                            binary_c = binary.split("").reverse().join("");
+                        }
+                        
+                        if(user_language == 1)
+                            record_s[count-1] = binary;
+                        else if(user_language == 2)
+                            record_s[count-1] = binary_c;
+                        record_n[count-1] = n;
+                        
+                        n = Math.floor(n/2);
+
+                        count++;
+                   }while(n != 0);
+                    record_s[count-1] = binary;
+                    record_n[count-1] = n;
+                    record_all[count-1] = "n = 0，迴圈結束，binary = " + binary + "\n";
+               }
+            }           
+           
+           function sumd(n){
+                var sum = 0;
+                var count = 1;
+                
+                if(user_loop == 1){
+                    for(var i = 1;i <= n; i++){
+                        sum += i;
+                        
+                        record_i[i-1] = i;
+                        record_s[i-1] = sum;
+                        record_n[i-1] = n;
+                        record_all[i-1] = "i = " +  i + "，繼續執行for迴圈，sum = " + sum + "\n";
+                    }
+                    record_i[i-1] = i;
+                    record_s[i-1] = sum;
+                    record_n[i-1] = n;
+                    record_all[i-1] = "i = " +  i + "，迴圈結束\n";
+                }
+                else if(user_loop == 2){
+                    while(count <= n){
+                        sum += count;
+                        
+                        record_c[count-1] = count;
+                        record_s[count-1] = sum;
+                        record_n[count-1] = n;
+                        record_all[count-1] = "count = " +  count + "，繼續執行while迴圈，sum = " + sum + "\n";
+
+                        count++;
+                    }
+                        record_c[count-1] = count;
+                        record_s[count-1] = sum;
+                        record_n[count-1] = n;
+                        record_all[count-1] = "count = " +  count + "，迴圈結束\n";
+                }
+                else if(user_loop == 3){
+                    do {
+                        sum += count;
+                        
+                        record_c[count-1] = count;
+                        record_s[count-1] = sum;
+                        record_n[count-1] = n;
+                        if((count-1)/2 == 0)
+                            record_all[count-1] = "count = " +  count + "，第一次執行do-while迴圈，sum = " + sum + "\n";
+                        else 
+                            record_all[count-1] = "count = " +  count + "，繼續執行do-while迴圈，sum = " + sum + "\n";
+
+                        count++;
+                    } while (count <= n);
+                    record_c[count-1] = count;
+                    record_s[count-1] = sum;
+                    record_n[count-1] = n;
+                    record_all[count-1] = "count = " +  count + "，迴圈結束\n";
+                }
+            }           
+    
+           function sum2(n){
+                var sum = 0;
+                var count = 1;
+                
+                if(user_loop == 1){
+                    for(var i = 1;i <= n; i+=2){
+                        sum += i;
+                        
+                        record_i[(i-1)/2] = i;
+                        record_s[(i-1)/2] = sum;
+                        record_n[(i-1)/2] = n;
+                        record_all[(i-1)/2] = "i = " +  i + "，繼續執行for迴圈，sum = " + sum + "\n";
+                    }
+                    record_i[(i-1)/2] = i;
+                    record_s[(i-1)/2] = sum;
+                    record_n[(i-1)/2] = n;
+                    record_all[(i-1)/2] = "i = " +  i + "，迴圈結束\n";
+                }
+                else if(user_loop == 2){
+                    while(count <= n){
+                        sum += count;
+                        
+                        record_c[(count-1)/2] = count;
+                        record_s[(count-1)/2] = sum;
+                        record_n[(count-1)/2] = n;
+                        record_all[(count-1)/2] = "count = " +  count + "，繼續執行while迴圈，sum = " + sum + "\n";
+                   
+                        count+=2;
+                    }
+                    record_c[(count-1)/2] = count;
+                    record_s[(count-1)/2] = sum;
+                    record_n[(count-1)/2] = n;
+                    record_all[(count-1)/2] = "count = " +  count + "，迴圈結束\n";
+                }
+                else if(user_loop == 3){
+                    do {
+                        sum += count;
+                        
+                        record_c[(count-1)/2] = count;
+                        record_s[(count-1)/2] = sum;
+                        record_n[(count-1)/2] = n;
+                        if((count-1)/2 == 0)
+                            record_all[(count-1)/2] = "count = " +  count + "，第一次執行do-while迴圈，sum = " + sum + "\n";
+                        else 
+                            record_all[(count-1)/2] = "count = " +  count + "，繼續執行do-while迴圈，sum = " + sum + "\n";
+                   
+                        count+=2;
+                    } while (count <= n);
+                        record_c[(count-1)/2] = count;
+                        record_s[(count-1)/2] = sum;
+                        record_n[(count-1)/2] = n;
+                        record_all[(count-1)/2] = "count = " +  count + "，迴圈結束\n";
+                }
+           }                   
+    
+           function rank(n){
+                var product = 1;
+                var count = 1;
+                
+                if(user_loop == 1){
+                    for(var i = 1;i <= n; i++){
+                        product *= i;
+                        
+                        record_i[i-1] = i;
+                        record_s[i-1] = product;
+                        record_n[i-1] = n;
+                        record_all[i-1] = "i = " +  i + "，繼續執行for迴圈，product = " + product + "\n";
+                    }
+                    record_i[i-1] = i;
+                    record_s[i-1] = product;
+                    record_n[i-1] = n;
+                    record_all[i-1] = "i = " +  i + "，迴圈結束\n";
+                }
+                else if(user_loop == 2){
+                    while(count <= n){
+                        product *= count;
+                        
+                        record_c[count-1] = count;
+                        record_s[count-1] = product;
+                        record_n[count-1] = n;
+                        record_all[count-1] = "count = " +  count + "，繼續執行while迴圈，product = " + product + "\n";
+
+                        count++;
+                    }
+                    record_c[count-1] = count;
+                    record_s[count-1] = product;
+                    record_n[count-1] = n;
+                    record_all[count-1] = "count = " +  count + "，迴圈結束\n";
+                   
+                }
+                else if(user_loop == 3){
+                    do {
+                        product *= count;
+                        
+                        record_c[count-1] = count;
+                        record_s[count-1] = product;
+                        record_n[count-1] = n;
+                        if(count - 1 == 0)
+                            record_all[count-1] = "count = " +  count + "，第一次執行do-while迴圈，product = " + product + "\n";
+                        else        
+                            record_all[count-1] = "count = " +  count + "，繼續執行do-while迴圈，product = " + product + "\n";
+                        
+                        count++;
+                    } while (count <= n);
+                    record_c[count-1] = count;
+                    record_s[count-1] = product;
+                    record_n[count-1] = n;   
+                    record_all[count-1] = "count = " +  count + "，迴圈結束\n";
+                }
+            }           
+       
+           function empty(n){               
+                if(user_loop == 1){
+                    for(var i = 1;i <= n; i++){
+                        record_i[i-1] = i;
+                        record_n[i-1] = n;
+                        record_all[i-1] = "執行第" + i + "次空迴圈，此時i = " + i + "\n";
+                    }
+                    record_i[i-1] = i;
+                    record_n[i-1] = n;
+                    record_all[i-1] = "i = " +  i + "，迴圈結束\n";
+                }
+           }
+       
+       
+           function next(){    
+               if(step_mode_start == true && recur_end == false && count_next <= record_all.length){                     
+                   if(record_all[count_next] == undefined){
+                   }
+                   else{
+                        process_2.value += record_all[count_next]; 
+                        process_1.value = record_all[count_next];
+
+                        show_var(count_next);
+                        select_draw(record_all[count_next]);
+
+                        count_next++;  
+                   }
+                    if(count_next == record_all.length){ 
+                        recur_end = true;
+                    }
+               }
+           }      
+       
+       
+           function show_result_mode(){
+                draw_picture();
+                
+                // step mode: show step 1
+                if(user_mode == 1 && step_mode_start == false){                      
+                    process_2.value += record_all[count_next];
+                    process_1.value  = record_all[count_next];
+                    step_mode_start = true;
+                    show_var(count_next);
+                    select_draw(record_all[count_next]);
+                    count_next ++;
+                }
+                // anime
+                else if(user_mode == 2){
+                    interval_ID = setInterval( function(){ anime() } ,set_delay);
+                }
+                // run all
+                else if(user_mode == 3){
+                       
+                    for(var i = 0; i < record_all.length;i++){
+                        process_1.value  = record_all[i];
+                        process_2.value += record_all[i];
+                    }
+                  
+                    recur_end = true;  
+                }    
+            }
+           
+           
+           function anime(){    
+                process_1.value  = record_all[count_anime]; 
+                process_2.value += record_all[count_anime];  
+
+                show_var(count_anime);
+                select_draw(record_all[count_anime]);
+                count_anime++;
+                
+                if(count_anime == record_all.length){ 
+                    clearInterval(interval_ID); // stop animation
+                    recur_end = true; 
+                }
+            }               
+                        
+           
+           function restart(){   
+                count_next = 0;  
+                count_anime = 0; 
+           
+                step_mode_start = false;           
+                recur_end = false;   
+                
+                record_i = [];
+                record_c = [];
+                record_m = [];
+                record_n = [];
+                record_s = [];
+                record_all = [];          
+                
+                user_input_m.value = "";
+                user_input_n.value = "";
+                
+                show_i.value = "";
+                show_c.value = "";
+                show_m.value = "";
+                show_n.value = "";
+                show_s.value = "";
+                
+                process_1.value = "";
+                process_2.value = "";
+                
+                clearInterval(interval_ID); // stop animation
+                
+                // clear canvas
+                recur.clearRect(1,1,548,398);
+                picture.clearRect(1,1,598,398);
+           }
+           
+           
+           function show_var(count){ 
+               if(record_i[count] != undefined)
+                   show_i.value = record_i[count];
+               if(record_c[count] != undefined)
+                   show_c.value = record_c[count];
+               if(record_m[count] != undefined)
+                   show_m.value = record_m[count];
+               if(record_n[count] != undefined)
+                   show_n.value = record_n[count];
+               if(record_s[count] != undefined)
+                   show_s.value = record_s[count];
+           }
+           
+           
+           function create_border(){       
+                recur.strokeRect(0,0,550,400);  
+                picture.strokeRect(0,0,600,400);  
+           }
+    
+           // draw source code on canvas
+           function draw_code(){
+                recur.font = "14px Verdana"; 
+                if(user_language == 1){
+                    if(user_loop == 1){
+                        if(user_func == 1 ){
+                            recur.fillText(" 　gcd = n;",0,50);  
+                            recur.fillText(" 　for(var i = m % n; i != 0; i = m % n){",0,70);              
+                            recur.fillText(" 　　gcd = m % n;",0,90);              
+                            recur.fillText(" 　　m = n;",0,110);                  
+                            recur.fillText(" 　　n = gcd;",0,130); 
+                            recur.fillText(" 　}",0,150); 
+                        }
+                        else if(user_func == 2 ){  
+                            recur.fillText(" 　palindrome = true;",0,50);  
+                            recur.fillText(" 　for(String i = n; i.length() > 1 && palindrome == true; i = n){",0,70);              
+                            recur.fillText(" 　　if(n.endsWith(String.valueOf(n.charAt(0))) == false)",0,90);              
+                            recur.fillText(" 　　　palindrome = false;",0,110);                  
+                            recur.fillText(" 　　n = n.substring(1,n.length()-1);",0,130); 
+                            recur.fillText(" 　}",0,150); 
+                        } 
+                        else if(user_func == 3 ){ 
+                            recur.fillText(" 　for(var i = n; i != 0 ; i /= 2){",0,50);  
+                            recur.fillText(" 　　if(i % 2 == 1)",0,70);              
+                            recur.fillText(" 　　　binary = \"1\" + binary;",0,90);              
+                            recur.fillText(" 　　else",0,110);                  
+                            recur.fillText(" 　　　binary = \"0\" + binary;",0,130); 
+                            recur.fillText(" 　}",0,150); 
+                        }
+                        else if(user_func == 4 ){ 
+                            recur.fillText(" 　for(var i = 1;i <= n; i++)",0,50);  
+                            recur.fillText(" 　　sum += i;",0,70);                                
+                        }
+                        else if(user_func == 5 ){  
+                            recur.fillText(" 　for(var i = 1;i <= n; i+=2)",0,50);  
+                            recur.fillText(" 　　sum += i;",0,70);              
+                        }
+                        else if(user_func == 6 ){   
+                            recur.fillText(" 　for(var i = 1;i <= n; i++)",0,50);  
+                            recur.fillText(" 　　product *= i;",0,70);                            
+                        }
+                        else if(user_func == 7 ){   
+                            recur.fillText(" 　for(var i = 1;i <= n; i++){",0,50);  
+                            
+                            recur.fillText(" 　}",0,90);     
+                        }
+                    }
+                    else if(user_loop == 2){
+                        if(user_func == 1 ){
+                            recur.fillText(" 　gcd = n;",0,50);  
+                            recur.fillText(" 　while(m % n != 0){",0,70);              
+                            recur.fillText(" 　　gcd = m % n;",0,90);              
+                            recur.fillText(" 　　m = n;",0,110);                  
+                            recur.fillText(" 　　n = gcd;",0,130); 
+                            recur.fillText(" 　}",0,150); 
+                        }
+                        else if(user_func == 2 ){  
+                            recur.fillText(" 　while(n.length() > 1 && palindrome == true){",0,50);  
+                            recur.fillText(" 　　if(n.endsWith(String.valueOf(n.charAt(0))) == false)",0,70);              
+                            recur.fillText(" 　　　palindrome = false;",0,90);              
+                            recur.fillText(" 　　n = n.substring(1,n.length()-1);",0,110);                  
+                            recur.fillText(" 　}",0,130); 
+                        } 
+                        else if(user_func == 3 ){ 
+                            recur.fillText(" 　while(n != 0){",0,50);  
+                            recur.fillText(" 　　if(n % 2 == 1)",0,70);              
+                            recur.fillText(" 　　　binary = \"1\" + binary;",0,90);              
+                            recur.fillText(" 　　else",0,110);                  
+                            recur.fillText(" 　　　binary = \"0\" + binary;",0,130); 
+                            recur.fillText(" 　　n /= 2;",0,150); 
+                            recur.fillText(" 　}",0,170);
+                        }
+                        else if(user_func == 4 ){ 
+                            recur.fillText(" 　while(count <= n){",0,50);  
+                            recur.fillText(" 　　sum += count;",0,70);              
+                            recur.fillText(" 　　count++;",0,90);              
+                            recur.fillText(" 　}",0,110);                  
+                        }
+                        else if(user_func == 5 ){ 
+                            recur.fillText(" 　while(count <= n){",0,50);  
+                            recur.fillText(" 　　sum += count;",0,70);              
+                            recur.fillText(" 　　count+=2;",0,90);              
+                            recur.fillText(" 　}",0,110);                  
+                        }
+                        else if(user_func == 6 ){  
+                            recur.fillText(" 　while(count <= n){",0,50);  
+                            recur.fillText(" 　　product *= count;",0,70);              
+                            recur.fillText(" 　　count++;",0,90);              
+                            recur.fillText(" 　}",0,110);                  
+                        }
+                        else if(user_func == 7 ){ 
+                            recur.fillText(" 　while(count <= n){",0,50);           
+                            recur.fillText(" 　　count++;",0,90);              
+                            recur.fillText(" 　}",0,110);                  
+                        }
+                    }
+                    else if(user_loop == 3){
+                        if(user_func == 1 ){
+                            recur.fillText(" 　gcd = n;",0,50);  
+                            recur.fillText(" 　do{",0,70);              
+                            recur.fillText(" 　　if(m % n == 0) ",0,90);              
+                            recur.fillText(" 　　　break;",0,110);                  
+                            recur.fillText(" 　　gcd = m % n;",0,130); 
+                            recur.fillText(" 　　m = n;",0,150); 
+                            recur.fillText(" 　　n = gcd;",0,170); 
+                            recur.fillText(" 　}while(m % n != 0);",0,190);
+                        }
+                        else if(user_func == 2 ){  
+                            recur.fillText(" 　do{",0,50);  
+                            recur.fillText(" 　　if(n.endsWith(String.valueOf(n.charAt(0))) == false)",0,70);              
+                            recur.fillText(" 　　　palindrome = false;",0,90);              
+                            recur.fillText(" 　　if(n.length() > 1)",0,110);                  
+                            recur.fillText(" 　　　n = n.substring(1,n.length()-1);",0,130); 
+                            recur.fillText(" 　}while(n.length() > 1 && palindrome == true);",0,150); 
+                        } 
+                        else if(user_func == 3 ){ 
+                            recur.fillText(" 　do{",0,50);  
+                            recur.fillText(" 　　if(n % 2 == 1)",0,70);              
+                            recur.fillText(" 　　　binary = \"1\" + binary;",0,90);              
+                            recur.fillText(" 　　else",0,110);                  
+                            recur.fillText(" 　　　binary = \"0\" + binary;",0,130); 
+                            recur.fillText(" 　　n /= 2;",0,150); 
+                            recur.fillText(" 　}while(n != 0); ",0,170);
+                        }
+                        else if(user_func == 4 ){ 
+                            recur.fillText(" 　do{",0,50);  
+                            recur.fillText(" 　　sum += count;",0,70);              
+                            recur.fillText(" 　　count++;",0,90);              
+                            recur.fillText(" 　}while(count <= n);",0,110);                  
+                        }
+                        else if(user_func == 5 ){ 
+                            recur.fillText(" 　do{",0,50);  
+                            recur.fillText(" 　　sum += count;",0,70);              
+                            recur.fillText(" 　　count+=2;",0,90);              
+                            recur.fillText(" 　}while(count <= n);",0,110);                  
+                        }
+                        else if(user_func == 6 ){  
+                            recur.fillText(" 　do{",0,50);  
+                            recur.fillText(" 　　product *= count;",0,70);              
+                            recur.fillText(" 　　count++;",0,90);              
+                            recur.fillText(" 　}while(count <= n);",0,110);                  
+                        }
+                    }
+                }
+                else if(user_language == 2){
+                    if(user_loop == 1){
+                        if(user_func == 1 ){
+                            recur.fillText(" 　gcd = n;",0,50);  
+                            recur.fillText(" 　for(var i = m % n; i != 0; i = m % n){",0,70);              
+                            recur.fillText(" 　　gcd = m % n;",0,90);              
+                            recur.fillText(" 　　m = n;",0,110);                  
+                            recur.fillText(" 　　n = gcd;",0,130); 
+                            recur.fillText(" 　}",0,150); 
+                        }
+                        else if(user_func == 2 ){  
+                            recur.fillText(" 　palindrome = true;	",0,50);
+                            recur.fillText(" 　for (i=0, j=strlen(n)-1; palindrome == true && i<j; ++i, --j)",0,70);
+                            recur.fillText(" 　　　if (n[i] != n[j])",0,90);
+                            recur.fillText(" 　　　　palindrome = false;",0,110);
+                        } 
+                        else if(user_func == 3 ){ 
+                            recur.fillText(" 　for(var i = n; i != 0 ; i /= 2){",0,50);
+                            recur.fillText(" 　　if(i % 2 ==1)",0,70);
+                            recur.fillText(" 　　　binary[count] = '1';",0,90);
+                            recur.fillText(" 　　else",0,110);
+                            recur.fillText(" 　　　binary[count] = '0';",0,130);
+                            recur.fillText(" 　　count++;",0,170);
+                            recur.fillText(" 　}",0,190);
+                            recur.fillText(" 　// reverse",0,210);
+                            recur.fillText(" 　for (i = 0, j = strlen(binary) - 1; i < j; i++, j--) {",0,230);
+                            recur.fillText(" 　　c = binary[i];",0,250);
+                            recur.fillText(" 　　binary[i] = binary[j];",0,270);
+                            recur.fillText(" 　　binary[j] = c;",0,290);
+                            recur.fillText(" 　}",0,310);
+                        }
+                        else if(user_func == 4 ){  
+                            recur.fillText(" 　for(var i = 1;i <= n; i++)",0,50);  
+                            recur.fillText(" 　　sum += i;",0,70);                            
+                        }
+                        else if(user_func == 5 ){ 
+                            recur.fillText(" 　for(var i = 1;i <= n; i+=2)",0,50);  
+                            recur.fillText(" 　　sum += i;",0,70);              
+                        }
+                        else if(user_func == 6 ){  
+                            recur.fillText(" 　for(var i = 1;i <= n; i++)",0,50);  
+                            recur.fillText(" 　　product *= i;",0,70);                             
+                        }
+                        else if(user_func == 7 ){   
+                            recur.fillText(" 　for(var i = 1;i <= n; i++){",0,50);  
+                            
+                            recur.fillText(" 　}",0,90);     
+                        }
+                    }
+                    else if(user_loop == 2){
+                        if(user_func == 1 ){
+                            recur.fillText(" 　gcd = n;",0,50);  
+                            recur.fillText(" 　while(m % n != 0){",0,70);              
+                            recur.fillText(" 　　gcd = m % n;",0,90);              
+                            recur.fillText(" 　　m = n;",0,110);                  
+                            recur.fillText(" 　　n = gcd;",0,130); 
+                            recur.fillText(" 　}",0,150); 
+                        }
+                        else if(user_func == 2 ){  
+                            recur.fillText(" 　palindrome = true;",0,50);
+                            recur.fillText(" 　i=0;",0,70);
+                            recur.fillText(" 　j=strlen(n)-1;",0,90);
+                            recur.fillText(" 　while(palindrome == true && i<j){",0,110);
+                            recur.fillText(" 　　if (n[i] != n[j])",0,130);
+                            recur.fillText(" 　　　palindrome = false;",0,150);
+                            recur.fillText(" 　　i++;",0,170);
+                            recur.fillText(" 　　j--;",0,190);
+                            recur.fillText(" 　}",0,210);
+                        } 
+                        else if(user_func == 3 ){ 
+                            recur.fillText(" 　while(n != 0){",0,50);
+                            recur.fillText(" 　　if(n % 2 ==1)",0,70);
+                            recur.fillText(" 　　　binary[count] = '1';",0,90);
+                            recur.fillText(" 　　else",0,110);
+                            recur.fillText(" 　　　binary[count] = '0';",0,130);
+                            recur.fillText(" 　　n /= 2;",0,150);
+                            recur.fillText(" 　　count++;",0,170);
+                            recur.fillText(" 　}",0,190);
+                            recur.fillText(" 　// reverse",0,210);
+                            recur.fillText(" 　for (i = 0, j = strlen(binary) - 1; i < j; i++, j--) {",0,230);
+                            recur.fillText(" 　　c = binary[i];",0,250);
+                            recur.fillText(" 　　binary[i] = binary[j];",0,270);
+                            recur.fillText(" 　　binary[j] = c;",0,290);
+                            recur.fillText(" 　}",0,310);
+                        }
+                        else if(user_func == 4 ){ 
+                            recur.fillText(" 　while(count <= n){",0,50);  
+                            recur.fillText(" 　　sum += count;",0,70);              
+                            recur.fillText(" 　　count++;",0,90);              
+                            recur.fillText(" 　}",0,110);                  
+                        }
+                        else if(user_func == 5 ){ 
+                            recur.fillText(" 　while(count <= n){",0,50);  
+                            recur.fillText(" 　　sum += count;",0,70);              
+                            recur.fillText(" 　　count+=2;",0,90);              
+                            recur.fillText(" 　}",0,110);                   
+                        }
+                        else if(user_func == 6 ){  
+                            recur.fillText(" 　while(count <= n){",0,50);  
+                            recur.fillText(" 　　product *= count;",0,70);              
+                            recur.fillText(" 　　count++;",0,90);              
+                            recur.fillText(" 　}",0,110);                  
+                        }
+                    }
+                    else if(user_loop == 3){
+                        if(user_func == 1 ){
+                            recur.fillText(" 　gcd = n;",0,50);  
+                            recur.fillText(" 　do{",0,70);              
+                            recur.fillText(" 　　if(m % n == 0) ",0,90);              
+                            recur.fillText(" 　　　break;",0,110);                  
+                            recur.fillText(" 　　gcd = m % n;",0,130); 
+                            recur.fillText(" 　　m = n;",0,150); 
+                            recur.fillText(" 　　n = gcd;",0,170); 
+                            recur.fillText(" 　}while(m % n != 0);",0,190);
+                        }
+                        else if(user_func == 2 ){  
+                            recur.fillText(" 　palindrome = true;",0,50);
+                            recur.fillText(" 　i=0;",0,70);
+                            recur.fillText(" 　j=strlen(n)-1;",0,90);
+                            recur.fillText(" 　do{",0,110);
+                            recur.fillText(" 　　if (n[i] != n[j])",0,130);
+                            recur.fillText(" 　　　palindrome = false;",0,150);
+                            recur.fillText(" 　　i++;",0,170);
+                            recur.fillText(" 　　j--;",0,190);
+                            recur.fillText(" 　}while(palindrome == true && i<j);",0,210);
+                        } 
+                        else if(user_func == 3 ){ 
+                            recur.fillText(" 　do{",0,50);
+                            recur.fillText(" 　　if(n % 2 ==1)",0,70);
+                            recur.fillText(" 　　　binary[count] = '1';",0,90);
+                            recur.fillText(" 　　else",0,110);
+                            recur.fillText(" 　　　binary[count] = '0';",0,130);
+                            recur.fillText(" 　　n /= 2;",0,150);
+                            recur.fillText(" 　　count++;",0,170);
+                            recur.fillText(" 　}while(n != 0);",0,190);
+                            recur.fillText(" 　// reverse",0,210);
+                            recur.fillText(" 　for (i = 0, j = strlen(binary) - 1; i < j; i++, j--) {",0,230);
+                            recur.fillText(" 　　c = binary[i];",0,250);
+                            recur.fillText(" 　　binary[i] = binary[j];",0,270);
+                            recur.fillText(" 　　binary[j] = c;",0,290);
+                            recur.fillText(" 　}",0,310);
+                        }
+                        else if(user_func == 4 ){  
+                            recur.fillText(" 　do{",0,50);  
+                            recur.fillText(" 　　sum += count;",0,70);              
+                            recur.fillText(" 　　count++;",0,90);              
+                            recur.fillText(" 　}while(count <= n);",0,110);                  
+                        }
+                        else if(user_func == 5 ){ 
+                            recur.fillText(" 　do{",0,50);  
+                            recur.fillText(" 　　sum += count;",0,70);              
+                            recur.fillText(" 　　count+=2;",0,90);              
+                            recur.fillText(" 　}while(count <= n);",0,110);                  
+                        }
+                        else if(user_func == 6 ){    
+                            recur.fillText(" 　do{",0,50);  
+                            recur.fillText(" 　　product *= count;",0,70);              
+                            recur.fillText(" 　　count++;",0,90);              
+                            recur.fillText(" 　}while(count <= n);",0,110);                  
+                        }
+                    }
+                }
+           }
+       
+           // set highlight area
+           function color_code(i){
+                // reset code
+                recur.fillStyle = "RGB(255, 255, 255)";
+                recur.fillRect (1,1,548,398);               
+                recur.fillStyle = "RGB(0,0,0)";
+                picture.fillStyle = "RGB(255, 255, 255)";
+                picture.fillRect (1,1,548,398);               
+                picture.fillStyle = "RGB(0,0,0)";
+                draw_code();
+                draw_picture();
+                
+                // set color
+                recur.fillStyle = "RGBA(255, 165, 0,0.5)";
+                picture.fillStyle = "RGBA(255, 165, 0,0.5)";
+        
+                if(user_language == 1){
+                    if(user_loop == 1){
+                        if(user_func == 1 ){
+                            if(i == 1){
+                                recur.fillRect (200, 55, 80, 20);
+                                recur.fillRect (1, 75, 548, 60);
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                        }
+                        else if(user_func == 2 ){  
+                            if(i == 1){
+                                recur.fillRect (410, 55, 50, 20);
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                            else if(i == 3){
+                                recur.fillRect (410, 55, 50, 20);
+                                recur.fillRect (1, 95, 548, 20); // false
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                        } 
+                        else if(user_func == 3 ){ 
+                            if(i == 1){
+                                recur.fillRect (1, 35, 548, 20);
+                                recur.fillRect (1, 35, 548, 20);
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                            else if(i == 3){
+                                recur.fillRect (165, 35, 50, 20);
+                                recur.fillRect (1, 75, 548, 20);  // 1 + binary
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 4){
+                                recur.fillRect (165, 35, 50, 20);
+                                recur.fillRect (1, 115, 548, 20); // 0 + binary
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                        }
+                        else if(user_func == 4 || user_func == 5 || user_func == 6 || user_func == 7){ 
+                            if(i == 1){
+                                recur.fillRect (160, 35, 40, 20);
+                                recur.fillRect (1, 55, 548, 20);
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                                }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                        }
+                    }
+                    else if(user_loop == 2){
+                        if(user_func == 1 ){
+                            if(i == 1){
+                                recur.fillRect (60, 55, 90, 20);
+                                recur.fillRect (1, 75, 548, 60);
+                                picture.fillRect(101,231,398,98);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                        }
+                        else if(user_func == 2 ){  
+                            if(i == 1){
+                                recur.fillRect (60, 35, 285, 20);
+                                picture.fillRect(101,231,398,98);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                            else if(i == 3){ // false
+                                recur.fillRect (60, 35, 285, 20);
+                                recur.fillRect (1, 75, 548, 20);
+                                picture.fillRect(101,231,398,98);
+                            }
+                        } 
+                        else if(user_func == 3 ){ 
+                            if(i == 1){
+                                recur.fillRect (1, 35, 548, 20);
+                                picture.fillRect(101,231,398,98);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                            else if(i == 3){  // 1 + binary
+                                recur.fillRect (60, 35, 50, 20);
+                                recur.fillRect (1, 75, 548, 20);
+                                picture.fillRect(101,231,398,98);
+                            }
+                            else if(i == 4){ // 0 + binary
+                                recur.fillRect (60, 35, 50, 20);
+                                recur.fillRect (1, 115, 548, 20);
+                                picture.fillRect(101,231,398,98);
+                            }    
+                        }
+                        else if(user_func == 4 || user_func == 5 || user_func == 6){ 
+                            if(i == 1){
+                                recur.fillRect (60, 35, 90, 20);
+                                recur.fillRect (1, 55, 548, 20);
+                                picture.fillRect(101,231,398,98);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                        }
+                    }
+                    else if(user_loop == 3){
+                        if(user_func == 1 ){
+                            if(i == 1){
+                                recur.fillRect (20, 55, 30, 20);
+                                recur.fillRect (1, 115, 548, 60);
+                                picture.fillRect(101,61,348,88);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(101,291,198,58);
+                            }
+                        }
+                        else if(user_func == 2 ){  
+                            if(i == 1){
+                                recur.fillRect (20, 35, 30, 20);
+                                picture.fillRect(101,61,348,88);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 3){ // false
+                                recur.fillRect (20, 35, 30, 20);
+                                recur.fillRect (1, 75, 548, 20);
+                                picture.fillRect(101,61,348,88);
+                            }
+                        } 
+                        else if(user_func == 3 ){ 
+                            if(i == 1){
+                                recur.fillRect (1, 35, 548, 20);
+                                picture.fillRect(101,61,348,88);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 3){ // 1 + binary
+                                recur.fillRect (20, 35, 30, 20);
+                                recur.fillRect (1, 75, 548, 20);
+                                picture.fillRect(101,61,348,88);
+                            } 
+                            else if(i == 4){ // 0 + binary
+                                recur.fillRect (20, 35, 30, 20);
+                                recur.fillRect (1, 115, 548, 20);
+                                picture.fillRect(101,61,348,88);
+                            }
+                        }
+                        else if(user_func == 4 || user_func == 5 || user_func == 6){ 
+                            if(i == 1){
+                                recur.fillRect (20, 35, 30, 20);
+                                recur.fillRect (1, 55, 548, 20);
+                                picture.fillRect(101,61,348,88);
+                            }    
+                            else if(i == 2){
+                                picture.fillRect(101,291,198,58);
+                            }
+                        }
+                    }
+                }
+                else if(user_language == 2){
+                    if(user_loop == 1){
+                        if(user_func == 1){
+                            if(i == 1){
+                                recur.fillRect (200, 55, 80, 20);
+                                recur.fillRect (1, 75, 548, 60);
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                        }
+                        else if(user_func == 2 ){  
+                            if(i == 1){
+                                recur.fillRect (380, 55, 70, 20);
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                            else if(i == 3){
+                                recur.fillRect (380, 55, 70, 20);
+                                recur.fillRect (1, 95, 548, 20); // false
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                        } 
+                        else if(user_func == 3 ){ 
+                            if(i == 1){
+                                recur.fillRect (1, 35, 548, 20);
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                            else if(i == 3){
+                                recur.fillRect (170, 32, 50, 20);
+                                recur.fillRect (1, 75, 548, 20);  // 1 + binary
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 4){
+                                recur.fillRect (170, 32, 50, 20);
+                                recur.fillRect (1, 115, 548, 20); // 0 + binary
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                            }
+                        }
+                        else if(user_func == 4 || user_func == 5 || user_func == 6 || user_func == 7){ 
+                            if(i == 1){
+                                recur.fillRect (160, 35, 45, 20);
+                                recur.fillRect (1, 55, 548, 20);
+                                picture.fillRect(101,211,348,58);
+                                picture.fillRect(101,291,198,58);
+                             }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                        }
+                    }
+                    else if(user_loop == 2){
+                        if(user_func == 1 ){
+                            if(i == 1){
+                                recur.fillRect (1, 75, 548, 60);
+                                recur.fillRect (60, 55, 90, 20);
+                                picture.fillRect(101,231,398,98);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                        }
+                        else if(user_func == 2 ){  
+                            if(i == 1){
+                                recur.fillRect (60, 95, 190, 20);
+                                picture.fillRect(101,231,398,98);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                            else if(i == 3){ // false
+                                recur.fillRect (60, 95, 190, 20);
+                                recur.fillRect (1, 135, 548, 20);
+                                picture.fillRect(101,231,398,98);
+                            }
+                        } 
+                        else if(user_func == 3 ){ 
+                            if(i == 1){
+                                recur.fillRect (1, 35, 548, 20);
+                                picture.fillRect(101,231,398,98);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                            else if(i == 3){  // 1 + binary
+                                recur.fillRect (60, 35, 50, 20);
+                                recur.fillRect (1, 75, 548, 20);
+                                picture.fillRect(101,231,398,98);
+                            }
+                            else if(i == 4){ // 0 + binary
+                                recur.fillRect (60, 35, 50, 20);
+                                recur.fillRect (1, 115, 548, 20);
+                                picture.fillRect(101,231,398,98);
+                            }    
+                        }
+                        else if(user_func == 4 || user_func == 5 || user_func == 6){ 
+                            if(i == 1){
+                                recur.fillRect (60, 35, 90, 20);
+                                recur.fillRect (1, 55, 548, 20);
+                                picture.fillRect(101,231,398,98);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(341,111,198,58);
+                            }
+                        }
+                    }
+                    else if(user_loop == 3){
+                        if(user_func == 1 ){
+                            if(i == 1){
+                                recur.fillRect (20, 55, 30, 20);
+                                recur.fillRect (1, 115, 548, 60);
+                                picture.fillRect(101,61,348,88);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(101,291,198,58);
+                            }
+                        }
+                        else if(user_func == 2 ){  
+                            if(i == 1){
+                                recur.fillRect (20, 95, 30, 20);
+                                picture.fillRect(101,61,348,88);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 3){ // false
+                                recur.fillRect (20, 95, 30, 20);
+                                recur.fillRect (1, 135, 548, 20);
+                                picture.fillRect(101,61,348,88);
+                            }
+                        } 
+                        else if(user_func == 3 ){ 
+                            if(i == 1){
+                                recur.fillRect (1, 35, 548, 20);
+                                picture.fillRect(101,61,348,88);
+                            }
+                            else if(i == 2){
+                                picture.fillRect(101,291,198,58);
+                            }
+                            else if(i == 3){ // 1 + binary
+                                recur.fillRect (20, 35, 30, 20);
+                                recur.fillRect (1, 75, 548, 20);
+                                picture.fillRect(101,61,348,88);
+                            } 
+                            else if(i == 4){ // 0 + binary
+                                recur.fillRect (20, 35, 30, 20);
+                                recur.fillRect (1, 115, 548, 20);
+                                picture.fillRect(101,61,348,88);
+                            }
+                        }
+                        else if(user_func == 4 || user_func == 5 || user_func == 6){ 
+                            if(i == 1){
+                                recur.fillRect (20, 35, 30, 20);
+                                recur.fillRect (1, 55, 548, 20);
+                                picture.fillRect(101,61,348,88);
+                            }    
+                            else if(i == 2){
+                                picture.fillRect(101,291,198,58);
+                            }
+                        }
+                    }
+                }
+               // reset color
+               recur.fillStyle = "RGB(0, 0, 0)";
+               picture.fillStyle = "RGB(0, 0, 0)";
+            }
+           
+           // use color_code() to draw color
+           function select_draw(string){
+                if(user_func == 1){
+                    if(string.indexOf("執行") != -1)                                       
+                        color_code(1);
+                    else if(string.indexOf("結束") != -1)
+                        color_code(2);
+                }
+                else if(user_func == 2){  
+                    if(string.indexOf("false") != -1)                                       
+                        color_code(3);
+                    else if(string.indexOf("執行") != -1)                                       
+                        color_code(1);
+                    else if(string.indexOf("結束") != -1)
+                        color_code(2);
+                } 
+                else if(user_func == 3){ 
+                    if(string.indexOf("\"0\"") != -1)                                       
+                        color_code(4);
+                    else if(string.indexOf("\"1\"") != -1)                                       
+                        color_code(3);
+                    else if(string.indexOf("結束") != -1)
+                        color_code(2);
+                }
+                else if(user_func == 4 || user_func == 5 || user_func == 6 || user_func == 7){
+                    if(string.indexOf("執行") != -1)                                       
+                        color_code(1);
+                    else if(string.indexOf("結束") != -1)
+                        color_code(2);
+                }
+           }
+
+           function draw_picture(){
+               picture.clearRect(0,0,600,400);
+               picture.strokeRect(0,0,600,400); 
+               picture.font = "12px Verdana"; 
+               // picture
+               if(user_loop == 1){ // for
+                   picture.strokeRect(100,10,200,60);  
+                   picture.beginPath();
+                   picture.moveTo(200,70);  picture.lineTo(200,90);
+                   // diamond 
+                   picture.moveTo(200,90);  picture.lineTo(300,140); 
+                   picture.moveTo(300,140); picture.lineTo(200,190);
+                   picture.moveTo(200,190); picture.lineTo(100,140);
+                   picture.moveTo(100,140); picture.lineTo(200,90);
+                   
+                   picture.moveTo(100,140); picture.lineTo(90,130);
+                   picture.moveTo(100,140); picture.lineTo(90,150);
+                   picture.moveTo(200,90);  picture.lineTo(190,80); 
+                   picture.moveTo(200,90);  picture.lineTo(210,80); 
+                   
+                   picture.moveTo(200,190); picture.lineTo(200,210);
+                   picture.moveTo(200,210); picture.lineTo(190,200);
+                   picture.moveTo(200,210); picture.lineTo(210,200);
+                   picture.fillText("true",210,200);
+                   picture.strokeRect(100,210,350,60);
+                   picture.moveTo(200,270); picture.lineTo(200,290);
+                   picture.moveTo(200,290); picture.lineTo(190,280);
+                   picture.moveTo(200,290); picture.lineTo(210,280);
+                   picture.strokeRect(100,290,200,60);
+                   picture.moveTo(100,320); picture.lineTo(60,320);
+                   picture.moveTo(100,140); picture.lineTo(60,140);
+                   picture.moveTo(60,140); picture.lineTo(60,320);
+                   picture.moveTo(300,140); picture.lineTo(340,140);
+                   picture.moveTo(340,140); picture.lineTo(330,150);
+                   picture.moveTo(340,140); picture.lineTo(330,130);
+                   picture.strokeRect(340,110,200,60);
+                   picture.fillText("false",302,135);
+                   picture.fillText("跳出迴圈",410,140);
+                   picture.closePath();
+                   picture.stroke();
+               }
+               else if(user_loop == 2){ // while
+                   picture.strokeRect(100,10,200,60);  
+                   picture.fillText("開始",180,45); 
+                   picture.beginPath();
+                   picture.moveTo(200,70);  picture.lineTo(200,90);
+                   // diamond 
+                   picture.moveTo(200,90);  picture.lineTo(300,140); 
+                   picture.moveTo(300,140); picture.lineTo(200,190);
+                   picture.moveTo(200,190); picture.lineTo(100,140);
+                   picture.moveTo(100,140); picture.lineTo(200,90);
+                   
+                   picture.moveTo(100,140); picture.lineTo(90,130);
+                   picture.moveTo(100,140); picture.lineTo(90,150);
+                   picture.moveTo(200,90);  picture.lineTo(190,80); 
+                   picture.moveTo(200,90);  picture.lineTo(210,80); 
+                   
+                   picture.moveTo(200,190); picture.lineTo(200,230);
+                   picture.moveTo(200,230); picture.lineTo(190,220);
+                   picture.moveTo(200,230); picture.lineTo(210,220);
+                   picture.fillText("true",210,210);
+                   picture.strokeRect(100,230,400,100);
+                   picture.moveTo(100,260); picture.lineTo(60,260);
+                   picture.moveTo(100,140); picture.lineTo(60,140);
+                   picture.moveTo(60,140);  picture.lineTo(60,260);
+                   picture.moveTo(300,140); picture.lineTo(340,140);
+                   picture.moveTo(340,140); picture.lineTo(330,130);
+                   picture.moveTo(340,140); picture.lineTo(330,150);
+                   picture.strokeRect(340,110,200,60);
+                   picture.fillText("false",302,135);
+                   picture.fillText("跳出迴圈",410,140);
+                   picture.closePath();
+                   picture.stroke();
+               }
+               else if(user_loop == 3){ // do-while
+                   picture.strokeRect(100,10,200,30);
+                   picture.beginPath();
+                   picture.fillText("開始",180,30); 
+                   picture.moveTo(200,40); picture.lineTo(200,60);
+                   picture.moveTo(200,60); picture.lineTo(190,50);
+                   picture.moveTo(200,60); picture.lineTo(210,50);
+                   picture.strokeRect(100,60,350,90);
+                   picture.moveTo(200,150); picture.lineTo(200,170);
+
+                   // diamond 
+                   picture.moveTo(200,170); picture.lineTo(300,220); 
+                   picture.moveTo(300,220); picture.lineTo(200,270);
+                   picture.moveTo(200,270); picture.lineTo(100,220);
+                   picture.moveTo(100,220); picture.lineTo(200,170);
+                   picture.moveTo(200,170); picture.lineTo(190,160);
+                   picture.moveTo(200,170); picture.lineTo(210,160);
+
+                   picture.moveTo(300,220); picture.lineTo(330,220);
+                   picture.fillText("true",300,210);
+                   picture.moveTo(330,220); picture.lineTo(330,150);
+                   picture.moveTo(330,150); picture.lineTo(320,160);
+                   picture.moveTo(330,150); picture.lineTo(340,160);
+                   picture.moveTo(200,270); picture.lineTo(200,290);
+                   picture.moveTo(200,290); picture.lineTo(190,280);
+                   picture.moveTo(200,290); picture.lineTo(210,280);
+                   picture.strokeRect(100,290,200,60);
+                   picture.fillText("跳出迴圈",170,320);
+                   picture.fillText("false",220,280);
+                   picture.closePath();
+                   picture.stroke();
+               }
+               
+               // code
+               if(user_loop == 1){ // for
+                   if(user_language == 1){
+                       switch(user_func){
+                           case 1: picture.fillText("i = m % n",110,25);
+                                   picture.fillText("i != 0",150,130);
+                                   picture.fillText("gcd = m % n;",110,225);
+                                   picture.fillText("m = n;",110,245);
+                                   picture.fillText("n = gcd;",110,265);
+                                   picture.fillText("i = m % n",110,305);
+                                   break;
+                           case 2: picture.fillText("i = n;",110,25);
+                                   picture.fillText("i.length() > 1 && ",150,130);
+                                   picture.fillText("palindrome == true ",150,150);
+                                   picture.fillText("if(n.endsWith(String.valueOf(n.charAt(0))) == false)",110,225);
+                                   picture.fillText(" palindrome = false;",110,245);
+                                   picture.fillText("n = n.substring(1,n.length()-1);",110,265);
+                                   picture.fillText("i = n",110,305);
+                                   break;
+                           case 3: picture.fillText("i = n",110,25);
+                                   picture.fillText("i != 0",150,130);
+                                   picture.fillText("if(i % 2 == 1)",110,225);
+                                   picture.fillText("　binary = \"1\" + binary;",110,240);
+                                   picture.fillText("else",110,255);
+                                   picture.fillText("　binary = \"0\" + binary;",110,270);
+                                   picture.fillText("i /= 2",110,305);
+                                   break;    
+                           case 4: picture.fillText("i = 1",110,25);
+                                   picture.fillText("i <= n",150,130);
+                                   picture.fillText("sum += i;",110,225);
+                                   picture.fillText("i++",110,305);
+                                   break;
+                           case 5: picture.fillText("i = 1",110,25);
+                                   picture.fillText("i <= n",150,130);
+                                   picture.fillText("sum += i;",110,225);
+                                   picture.fillText("i+=2",110,305);
+                                   break;        
+                           case 6: picture.fillText("i = 1",110,25);
+                                   picture.fillText("i <= n",150,130);
+                                   picture.fillText("product *= i;",110,225);
+                                   picture.fillText("i++",110,305);
+                                   break;     
+                           case 7: picture.fillText("i = 1",110,25);
+                                   picture.fillText("i <= n",150,130);
+                                   picture.fillText("i++",110,305);
+                                   break;          
+                       }
+                   }
+                   else if(user_language == 2){
+                       switch(user_func){
+                           case 1: picture.fillText("i = m % n",110,25);
+                                   picture.fillText("i != 0",150,130);
+                                   picture.fillText("gcd = m % n;",110,225);
+                                   picture.fillText("m = n;",110,245);
+                                   picture.fillText("n = gcd;",110,265);
+                                   picture.fillText("i = m % n",110,305);
+                                   break;
+                           case 2: picture.fillText("i=0, j=strlen(n)-1",110,25);
+                                   picture.fillText("palindrome == true && i<j",120,145);
+                                   picture.fillText("if (n[i] != n[j])",110,225);
+                                   picture.fillText(" palindrome = false;",110,245);
+                                   picture.fillText("++i, --j",110,305);
+                                   break;
+                           case 3: picture.fillText("i = n",110,25);
+                                   picture.fillText("i != 0",150,130);
+                                   picture.fillText("if(i % 2 ==1)",110,225);
+                                   picture.fillText(" binary[count] = '1';",110,237);
+                                   picture.fillText("else",110,247);
+                                   picture.fillText(" binary[count] = '0';",110,259);
+                                   picture.fillText("count++;",110,269);
+                                   picture.fillText("i /= 2",110,305);
+                                   break;    
+                           case 4: picture.fillText("i = 1",110,25);
+                                   picture.fillText("i <= n",150,130);
+                                   picture.fillText("sum += i;",110,225);
+                                   picture.fillText("i++",110,305);
+                                   break;
+                           case 5: picture.fillText("i = 1",110,25);
+                                   picture.fillText("i <= n",150,130);
+                                   picture.fillText("sum += i;",110,225);
+                                   picture.fillText("i+=2",110,305);
+                                   break;        
+                           case 6: picture.fillText("i = 1",110,25);
+                                   picture.fillText("i <= n",150,130);
+                                   picture.fillText("product *= i;",110,225);
+                                   picture.fillText("i++",110,305);
+                                   break;   
+                           case 7: picture.fillText("i = 1",110,25);
+                                   picture.fillText("i <= n",150,130);
+                                   picture.fillText("i++",110,305);
+                                   break;  
+                       }
+                   }
+               }
+               else if(user_loop == 2){
+                   if(user_language == 1){
+                       switch(user_func){
+                           case 1: picture.fillText("m % n != 0",150,130);
+                                   picture.fillText("gcd = m % n;",110,245);
+                                   picture.fillText("m = n;",110,265);
+                                   picture.fillText("n = gcd;",110,285);
+                                   break;
+                           case 2: picture.fillText("n.length() > 1 && ",150,130);
+                                   picture.fillText("palindrome == true",150,150);
+                                   picture.fillText("if(n.endsWith(String.valueOf(n.charAt(0))) == false)",110,245);
+                                   picture.fillText(" palindrome = false;",110,265);
+                                   picture.fillText("n = n.substring(1,n.length()-1);",110,285);
+                                   break;
+                           case 3: picture.fillText("n != 0",150,130);
+                                   picture.fillText("if(n % 2 == 1)",110,245);
+                                   picture.fillText("　binary = \"1\" + binary;",110,265);
+                                   picture.fillText("else",110,285);
+                                   picture.fillText("　binary = \"0\" + binary;",110,305);
+                                   picture.fillText("n /= 2;",110,325);
+                                   break;
+                           case 4: picture.fillText("count <= n",150,130);
+                                   picture.fillText("sum += count;",110,245);
+                                   picture.fillText("count++;",110,265);
+                                   break;
+                           case 5: picture.fillText("count <= n",150,130);
+                                   picture.fillText("sum += count;",110,245);
+                                   picture.fillText("count+=2;",110,265);
+                                   break;
+                           case 6: picture.fillText("count <= n",150,130);
+                                   picture.fillText("product *= count;",110,245);
+                                   picture.fillText("count++",110,265);
+                                   break;
+                       }
+                   }
+                   else if(user_language == 2){
+                       switch(user_func){
+                           case 1: picture.fillText("m % n != 0",150,130);
+                                   picture.fillText("gcd = m % n;",110,245);
+                                   picture.fillText("m = n;",110,265);
+                                   picture.fillText("n = gcd;",110,285);
+                                   break;
+                           case 2: picture.fillText("palindrome == true && i<j",120,140);
+                                   picture.fillText("if (n[i] != n[j])",110,245);
+                                   picture.fillText(" palindrome = false;",110,265);
+                                   picture.fillText("i++;",110,285);
+                                   picture.fillText("j--;",110,305);
+                                   break;
+                           case 3: picture.fillText("n != 0",150,130);
+                                   picture.fillText("if(n % 2 ==1)",110,245);
+                                   picture.fillText(" binary[count] = '1';",110,260);
+                                   picture.fillText("else",110,275);
+                                   picture.fillText(" binary[count] = '1';",110,290);
+                                   picture.fillText("n /= 2;",110,305);
+                                   picture.fillText("count++;",110,320);
+                                   break;
+                           case 4: picture.fillText("count <= n",150,130);
+                                   picture.fillText("sum += count;",110,245);
+                                   picture.fillText("count++;",110,265);
+                                   break;
+                           case 5: picture.fillText("count <= n",150,130);
+                                   picture.fillText("sum += count;",110,245);
+                                   picture.fillText("count+=2;",110,265);
+                                   break;
+                           case 6: picture.fillText("count <= n",150,130);
+                                   picture.fillText("product *= count;",110,245);
+                                   picture.fillText("count++;",110,265);
+                                   break;
+                       }
+                   }
+               }
+               else if(user_loop == 3){
+                   if(user_language == 1){
+                       switch(user_func){
+                           case 1: picture.fillText("if(m % n == 0)",110,75);
+                                   picture.fillText("　break;",110,90);
+                                   picture.fillText("gcd = m % n;",110,105);
+                                   picture.fillText("m = n;",110,120);
+                                   picture.fillText("n = gcd;",110,135);
+                                   picture.fillText("m % n != 0",150,210);
+                                   break;
+                           case 2: picture.fillText("if(n.endsWith(String.valueOf(n.charAt(0))) == false)",110,75);
+                                   picture.fillText("　palindrome = false;",110,95);
+                                   picture.fillText("if(n.length() > 1)",110,115);
+                                   picture.fillText("　n = n.substring(1,n.length()-1);",110,135);
+                                   picture.fillText("n.length() > 1 &&",150,210);
+                                   picture.fillText("palindrome == true",150,225);
+                                   break;
+                           case 3: picture.fillText("if(n % 2 == 1)",110,75);
+                                   picture.fillText("　binary = \"1\" + binary;",110,90);
+                                   picture.fillText("else",110,105);
+                                   picture.fillText("　binary = \"0\" + binary;",110,120);
+                                   picture.fillText("n /= 2;",110,135);
+                                   picture.fillText("n != 0",150,210);
+                                   break;
+                           case 4: picture.fillText("sum += count;",110,75);
+                                   picture.fillText("count++;",110,95);
+                                   picture.fillText("count <= n",150,210);
+                                   break;
+                           case 5: picture.fillText("sum += count;",110,75);
+                                   picture.fillText("count+=2;",110,95);
+                                   picture.fillText("count <= n",150,210);
+                                   break;
+                           case 6: picture.fillText("product *= count;",110,75);
+                                   picture.fillText("count++;",110,95);
+                                   picture.fillText("count <= n",150,210);
+                                   break;
+                       }
+                   }
+                   else if(user_language == 2){
+                       switch(user_func){
+                           case 1: picture.fillText("if(m % n == 0)",110,75);
+                                   picture.fillText("　break;",110,90);
+                                   picture.fillText("gcd = m % n;",110,105);
+                                   picture.fillText("m = n;",110,120);
+                                   picture.fillText("n = gcd;",110,135);
+                                   picture.fillText("m % n != 0",150,210);
+                                   break;
+                           case 2: picture.fillText("if (n[i] != n[j])",110,75);
+                                   picture.fillText("　palindrome = false;",110,95);
+                                   picture.fillText("i++;",110,115);
+                                   picture.fillText("j--;",110,135);
+                                   picture.fillText("n.length() > 1 &&",150,210);
+                                   picture.fillText("palindrome == true",150,225);
+                                   break;
+                           case 3: picture.fillText("if(n % 2 ==1)",110,75);
+                                   picture.fillText("　binary[count] = '1';",110,90);
+                                   picture.fillText("else",110,105);
+                                   picture.fillText("　binary[count] = '0';",110,120);
+                                   picture.fillText("n /= 2;",110,135);
+                                   picture.fillText("count++;",110,147);
+                                   picture.fillText("n != 0",150,210);
+                                   break;
+                           case 4: picture.fillText("sum += count;",110,75);
+                                   picture.fillText("count++;",110,95);
+                                   picture.fillText("count <= n",150,210);
+                                   break;
+                           case 5: picture.fillText("sum += count;",110,75);
+                                   picture.fillText("count+=2;",110,95);
+                                   picture.fillText("count <= n",150,210);
+                                   break;
+                           case 6: picture.fillText("product *= count;",110,75);
+                                   picture.fillText("count++;",110,95);
+                                   picture.fillText("count <= n",150,210);
+                                   break;
+                       }
+                   }
+               }
+           }
+           
+
+       </script>
+    </body>
+</html>

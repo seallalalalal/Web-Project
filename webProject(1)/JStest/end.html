@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<!--
+	Transitive by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<script>
+	function getGrade(){
+		if (typeof(Storage) !== "undefined") {
+			document.getElementById("q").innerHTML = localStorage.getItem("rightQuestion");
+		}
+		else {
+		  document.getElementById("q").innerHTML = "Sorry, your browser does not support Web Storage...";
+		}
+	}
+
+	</script>
+	<head>
+		<title>測驗結束</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body onload = "getGrade()">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="logo"><a href="../index.html">HTML <span>教學網站</span></a></div>
+				<a href="#menu" class="toggle"><span>Menu</span></a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="../index.html">Home</a></li>
+					<li> <a>html命令介紹</a></li>
+					<ul>
+						<li> <a href= "../1seperateTag.html">分隔標籤</a></li>
+  						<li> <a href= "../2typographyTag.html">排版標籤</a></li>
+  						<li> <a href= "../../3textTag.html">文字標籤</a></li>
+  						<li> <a href= "../4specialSymbol.html">特殊字元</a></li>
+  						<li> <a href= "../5imageTag.html">影像標籤</a></li>
+						<li> <a href= "../6backGroundTag.html">背景標籤</a></li>
+						<li> <a href= "../7linkTag.html">連結標籤</a></li>
+						<li> <a href= "../8tableTag.html">表格標籤</a></li>
+						<li> <a href= "../9listTag.html">清單標籤</a></li>
+						<li> <a href= "../10path.html">路徑</a></li>
+ 						<li> <a href= "../11marquee.html">跑馬燈</a></li>
+ 						<li> <a href= "../12frame.html">框架</a></li>
+						<li> <a href= "../13imageMap.html">影像地圖</a></li>
+					</ul>
+					<li><a>選擇題</a></li>
+					<ul>
+						<li> <a href= "../multipleChoice1.html">選擇練習題1</a></li>
+   						<li> <a href= "../multipleChoice2.html">選擇練習題2</a></li>
+ 					</ul>
+					<li><a>手寫題</a></li>
+					<ul>
+   						<li> <a href= "../hW-../1seperateTag.html">分隔標籤</a></li>
+  						<li> <a href= "../hW-../2typographyTag.html">排版標籤</a></li>
+						<li> <a href= "../hW-3.1textTag.html">文字標籤1</a></li>
+						<li> <a href= "../hW-3.2textTag.html">文字標籤2</a></li>
+						<li> <a href= "../hW-3.../../3textTag.html">文字標籤3</a></li>
+  						<li> <a href= "../hW-5imageTag.html">影像標籤</a></li>
+						<li> <a href= "../hW-7linkTag.html">連結標籤</a></li>
+						<li> <a href= "../hW-8.1tableTag.html">表格標籤1</a></li>
+						<li> <a href= "../hW-8.2tableTag.html">表格標籤2</a></li>
+						<li> <a href= "../hW-8.3tableTag.html">表格標籤3</a></li>
+						<li> <a href= "../hW-8.4tableTag.html">表格標籤4</a></li>
+						<li> <a href= "../hW-9listTag.html">清單標籤</a></li>
+						<li> <a href= "../hW-10marquee.html">跑馬燈</a></li>
+ 						<li> <a href= "../hW-11frame.html">框架</a></li>
+ 					</ul>
+ 					<li> <a href= "../references.html">參考與資料來源</a></li>
+					<li> <a href= "../textIndex.html">標籤索引</a></li>
+				</ul>
+			</nav>
+
+		<!-- Banner -->
+		<!--
+			To use a video as your background, set data-video to the name of your video without
+			its extension (eg. images/banner). Your video must be available in both .mp4 and .webm
+			formats to work correctly.
+		-->
+			<section id="banner" data-video="images/banner">
+				<div class="inner">
+					<h1>測驗結束</h1>
+					
+					<h2 style = "color:white">答對題數:<span id = "q"></span>/6</h2>
+					<br>
+					<button style = "color:white;" onclick = "window.localStorage.clear();window.location.href = '1.html';">再來一次</button>
+				</div>
+			</section>
+
+
+
+
+			
+
+		
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

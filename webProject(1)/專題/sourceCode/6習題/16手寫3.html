@@ -1,0 +1,80 @@
+<html>
+<script>
+var ans=0, cp=0;
+function copy(){
+	cp++;
+	var text1 = document.getElementById("show1").value; 
+	document.getElementById("run1").innerHTML=text1;
+	if (cp%2==0)
+		document.getElementById("run1").style="display:none";
+	else
+		document.getElementById("run1").style="display:block";
+}
+function answer()
+{
+	ans++;
+	if (ans%2==0)
+		document.getElementById("run2").style="display:none";
+	else
+		document.getElementById("run2").style="display:block";  
+}
+function clean()
+{
+	document.getElementById("run2").style="display:none";
+	document.getElementById("run1").style="display:none";
+	ans=0;
+	cp=0;
+}
+</script>
+<style>
+ .run2 {display:none;}
+</style>
+<body bgcolor = "#ADADAD">
+<center><h1>請撰寫下方列示<br>
+<img src=../../素材庫/手3.jpg>
+</center>
+<table border  align=center>
+<tr>
+<td>
+<textarea id="show1" rows=10 cols=50 style=font-size:25px>
+</textarea>
+</td>
+</tr>
+</table>
+<br><br>
+<center>
+&nbsp&nbsp&nbsp&nbsp<button onclick = "copy()">執行/隱藏結果</button>
+&nbsp&nbsp&nbsp&nbsp<button onclick = "answer()">顯示/隱藏答案</button>
+&nbsp&nbsp&nbsp&nbsp<button onclick = "clean()">重新作答</button>
+</center>
+<br><br>
+<table border height=300 width=800 align=center>
+<tr>
+<td width="200px">
+<p id=run1 class=run1 align="left"></p>
+</td>
+<td width="200px">
+<p id=run2 class=run2 align="left"><font size=5>
+&lt;html&gt;<br>
+&lt;body&gt; <br>
+&lt;ol type=a&gt; <br>
+&nbsp&lt;li&gt;資<br>
+&nbsp&lt;li&gt;訊<br>
+&lt;/ol&gt; <br>
+&lt;ul&gt; <br>
+&nbsp&lt;li&gt;科<br>
+
+&lt;/ul&gt; <br>
+&lt;ol type=i &gt;<br>
+&nbsp&lt;li&gt;學<br>
+&nbsp&lt;li&gt;系<br>
+&lt;/ol&gt; <br>
+&lt;html&gt; 
+
+</font></p>
+</td>
+</tr>
+</table><br><br><br>
+
+</body>
+</html>

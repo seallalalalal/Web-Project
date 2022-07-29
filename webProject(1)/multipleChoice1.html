@@ -1,0 +1,386 @@
+<script>
+var totalsc=0;
+var sel=-1;
+var test = "";
+var score = 0;
+var record = 1;
+var question = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var feedback = [0, 0, 0, 0, 0, 0];
+var Lsource = ["<a href=index.html#one target = _blank>html概說</a>",
+				"<a href=1seperateTag.html target = _blank>分隔標籤</a>",
+				"<a href=4specialSymbol.html target = _blank>特殊字元</a>",
+				"<a href=3textTag.html target = _blank>文字標籤</a>",
+				"<a href=5imageTag.html target = _blank>影像標籤</a>",
+				"<a href=6backGroundTag.html target = _blank>背景標籤</a>",];
+var hint =["correct", "html的中文意思是『超文件標記語言』", "html的中文意思是『超文件標記語言』",
+		"&lt;p&gt;...&lt;/p&gt;是一個雙標籤","&lt;font&gt;...&lt;/font&gt;是一個雙標籤","correct",
+		"correct","缺少此標籤程式將無法運行","缺少此標籤程式將無法運行",
+		"寬度的英文是width","應該是align而不是alifn","correct",
+		"空白的英文為none breaking space","空白的英文為none breaking space","correct",
+		"correct","注意標籤的順序標籤","注意標籤的順序標籤",
+		"correct","圖片會靠左對齊","文字會環繞喔",
+		"font應改為font color","color應為font color結尾應為&lt;/font&gt;","correct",
+		"應為&lt;body bgcolor = red&gt; &lt;/body&gt;","correct","網頁背景顏色應放在&lt;body&gt;",
+		"這是文字粗體的程式碼","這是文字底線的程式碼","correct", ];
+
+
+function judge(){
+	if(record == 1){
+		for(var k = 0; k < 10; k++){	
+			if(question[k] == 1){
+				score = score + 10;
+				document.getElementById("xo[" + k +"]").innerHTML = "<b><font color = #00bb00>		//correct</font></b>";
+			}
+			else{
+				document.getElementById("xo[" + k +"]").innerHTML = "<b><font color = red>		//incorrect</font></b>";
+			}
+		}
+	}
+	else alert("已交卷");
+	document.getElementById("showScore").innerHTML=score;
+	record = -1;
+ }
+function suggest() {
+	var advice='建議學習:<br>';
+	if(record == -1){
+		for(var i=0;i<6;i++)
+			if (feedback[i] == 0){
+				advice=advice+'<br>'+Lsource[i];
+			}
+		document.getElementById("msg3").innerHTML=advice;
+	}
+	else	alert("請先交卷!");	
+}
+
+function retest(){
+	record = 1;
+	sel=-1;
+	score=0;
+	document.getElementById("showScore").innerHTML="";
+	document.getElementById("msg3").innerHTML='';
+	for(var i=0;i<10;i++){
+		question[i]=feedback[i] = 0;
+		document.getElementById("xo[" + i +"]").innerHTML = "";
+	}
+	for(var j = 0; j < 31; j++){
+		document.getElementById("showHint[" + j + "]").innerHTML ="";
+	}
+ }
+ function explain(){
+	if(record == -1)
+		for(var j = 0; j < 31; j++){
+			document.getElementById("showHint[" + j + "]").innerHTML ="<font color = blue>		//" + hint[j] + "</font>";
+		}
+	else alert("請先交卷！");
+ }
+ var timevar1;
+function timebegin(){
+  timevar1=setInterval('timelimit()',1000);
+  }
+var usetime=0;
+var dt = new Date();
+var tm;
+var min = 10;
+var sec = 0;
+ function timelimit() {
+	
+	
+	if(sec == 0 && min != 0){
+		sec = 60;
+		min --;
+	}
+	sec--;
+	if(sec == 0 && min == 0){
+		clearInterval(timevar1);
+		alert("測驗結束!");
+		for(var i=0;i<29;i++){
+			document.getElementById('sel'+i).disabled=true;
+		}
+		judge();
+	}
+  tm = dt.toLocaleTimeString();
+  document.getElementById('current').innerHTML=tm;
+  usetime++;
+  if(min == 0 && sec <= 30)
+	document.getElementById('second').innerHTML="<font color = red>"+sec+"</font>"; 
+  else
+  document.getElementById('second').innerHTML=sec; 
+  document.getElementById('minute').innerHTML=min; 
+}
+</script>
+
+
+
+
+<!DOCTYPE HTML>
+<!--
+	Transitive by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+
+<html>
+	<head>
+		<title>選擇練習題1</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="subpage" onload = "timebegin()">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="logo"><a href="index.html">HTML <span>教學網站</span></a></div>
+				<a href="#menu" class="toggle"><span>Menu</span></a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li> <a>html命令介紹</a></li>
+					<ul>
+						<li> <a href= "1seperateTag.html">分隔標籤</a></li>
+  						<li> <a href= "2typographyTag.html">排版標籤</a></li>
+  						<li> <a href= "3textTag.html">文字標籤</a></li>
+  						<li> <a href= "4specialSymbol.html">特殊字元</a></li>
+  						<li> <a href= "5imageTag.html">影像標籤</a></li>
+						<li> <a href= "6backGroundTag.html">背景標籤</a></li>
+						<li> <a href= "7linkTag.html">連結標籤</a></li>
+						<li> <a href= "8tableTag.html">表格標籤</a></li>
+						<li> <a href= "9listTag.html">清單標籤</a></li>
+						<li> <a href= "10path.html">路徑</a></li>
+ 						<li> <a href= "11marquee.html">跑馬燈</a></li>
+ 						<li> <a href= "12frame.html">框架</a></li>
+						<li> <a href= "13imageMap.html">影像地圖</a></li>
+					</ul>
+					<li><a>選擇題</a></li>
+					<ul>
+						<li> <a href= "multipleChoice1.html">選擇練習題1</a></li>
+   						<li> <a href= "multipleChoice2.html">選擇練習題2</a></li>
+ 					</ul>
+					<li><a>手寫題</a></li>
+					<ul>
+   						<li> <a href= "hW-1seperateTag.html">分隔標籤</a></li>
+  						<li> <a href= "hW-2typographyTag.html">排版標籤</a></li>
+						<li> <a href= "hW-3.1textTag.html">文字標籤1</a></li>
+						<li> <a href= "hW-3.2textTag.html">文字標籤2</a></li>
+						<li> <a href= "hW-3.3textTag.html">文字標籤3</a></li>
+  						<li> <a href= "hW-5imageTag.html">影像標籤</a></li>
+						<li> <a href= "hW-7linkTag.html">連結標籤</a></li>
+						<li> <a href= "hW-8.1tableTag.html">表格標籤1</a></li>
+						<li> <a href= "hW-8.2tableTag.html">表格標籤2</a></li>
+						<li> <a href= "hW-8.3tableTag.html">表格標籤3</a></li>
+						<li> <a href= "hW-8.4tableTag.html">表格標籤4</a></li>
+						<li> <a href= "hW-9listTag.html">清單標籤</a></li>
+						<li> <a href= "hW-10marquee.html">跑馬燈</a></li>
+ 						<li> <a href= "hW-11frame.html">框架</a></li>
+ 					</ul>
+					<li><a>模擬練習</a></li>
+					<ul>
+   						<li> <a href= "JStest/1.html">迴圈模擬1</a></li>
+  						<li> <a href= "JStest2/loop.html">迴圈模擬2</a></li>
+						
+ 					</ul>
+ 					<li> <a href= "references.html">參考與資料來源</a></li>
+					<li> <a href= "textIndex.html">標籤索引</a></li>
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<section id="one" class="wrapper style2">
+				<div class="inner">
+					<div class="box">
+						<div class="image fit">
+							<img src="images/pic01.jpg" alt="" />
+						</div>
+						<div class="content">
+							<header class="align-center">
+								<h2>選擇練習題1</h2>
+								<p></p>
+							</header>
+							<hr size = 1 bgcolor = grey>
+							<font color = black>
+								<p>
+									現在時間: <span id='current'></span><br>
+									剩餘時間: <span id = "minute">10</span>分 <span id='second'>0</span> 秒
+								</p>
+								<ol>
+								<p><li>html全稱?<span id = xo[0]></span></li>
+								<div class="4u 12u$(small)">
+									<input type="radio" id="sel0" name=p0 onclick='sel=0;question[0] = 1;feedback[0] = 1;'>
+									<label for="sel0"><font color = black>hyper text markup language</font><br><span id = showHint[0]></span></label>
+								</div>
+								<div class="4u 12u$(small)">
+									<input type="radio" id="sel1" name=p0 onclick='sel=1;question[0] = 0;'>
+									<label for="sel1"><font color = black>higher tastic makeup language</font><br><span id = showHint[1]></span></label>
+								</div>
+								<div class="4u 12u$(small)">
+									<input type="radio" id="sel2" name=p0 onclick='sel=2;question[0] = 0;'>
+									<label for="sel2"><font color = black>hot trend makeup language</font><br><span id = showHint[2]></span></label>
+								</div>
+								</p>
+								<p><li>以下何者為單標記命令?<span id = xo[1]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel3" name=p1 onclick='sel=3;question[1] = 0;'>
+										<label for="sel3"><font color = black>&lt; p &gt;</font><br><span id = showHint[3]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel4" name=p1 onclick='sel=4;question[1] = 0;'>
+										<label for="sel4"><font color = black>&lt; font &gt;</font><br><span id = showHint[4]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel5" name=p1 onclick='sel=5;question[1] = 1;feedback[0] = 1;'>
+										<label for="sel5"><font color = black>&lt; br &gt;</font><br><span id = showHint[5]></span></label>
+									</div>
+								</p>
+								<p><li>下列何標籤對於html檔來說並非不可或缺的?<span id = xo[2]></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel6" name=p2 onclick='sel=6;question[2] = 1;feedback[0] = 1;'>
+										<label for="sel6"><font color = black>&lt;title&gt;</font><br><span id = showHint[6]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel7" name=p2 onclick='sel=7;question[2] = 0;'>
+										<label for="sel7"><font color = black>&lt;body&gt;</font><br><span id = showHint[7]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel8" name=p2 onclick='sel=8;question[2] = 0;'>
+										<label for="sel8"><font color = black>&lt;html&gt;</font><br><span id = showHint[8]></span></label>
+									</div>
+								</p>
+								<p><li>欲產生一條一條置中對齊、寬度30的水平線，下列程式碼和者正確?<span id = xo[3]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel9" name=p3 onclick='sel=9;question[3] = 0;'>
+										<label for="sel9"><font color = black>&lt; hr length = 30 alifn = right &gt;</font><br><span id = showHint[9]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel10" name=p3 onclick='sel=10;question[3] = 0;'>
+										<label for="sel10"><font color = black>&lt; hr width  = 30 alifn = right &gt;</font><br><span id = showHint[10]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel11" name=p3 onclick='sel=11;question[3] = 1;feedback[1] = 1;'>
+										<label for="sel11"><font color = black>&lt; hr width = 30 align = right &gt;</font><br><span id = showHint[11]></span></label>
+									</div>
+								</p>
+								<p><li>下列程式碼何者能輸出一個空白字元?<span id = xo[4]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel12" name=p4 onclick='sel=12;question[4] = 0;'>
+										<label for="sel12"><font color = black>&amp;lt;</font><br><span id = showHint[12]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel13" name=p4 onclick='sel=13;question[4] = 1;feedback[2] = 1;'>
+										<label for="sel13"><font color = black>&amp;nbsp;</font><br><span id = showHint[13]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel14" name=p4 onclick='sel=14;question[4] = 0;'>
+										<label for="sel14"><font color = black>&amp;gt;</font><br><span id = showHint[14]></span></label>
+									</div>
+								</p>
+								<p><li>如欲產生粗體且有底線之文字，下列何者錯誤?<span id = xo[5]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel15" name=p5 onclick='sel=15;question[5] = 1;feedback[3] = 1;'>
+										<label for="sel15"><font color = black>&lt; B &gt; &lt; U &gt;文字&lt; /B &gt; &lt; /U &gt;</font><br><span id = showHint[15]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel16" name=p5 onclick='sel=16;question[5] = 0;'>
+										<label for="sel16"><font color = black>&lt; U &gt; &lt; B &gt;文字&lt; /B &gt; &lt; /U &gt;</font><br><span id = showHint[16]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel17" name=p5 onclick='sel=17;question[5] = 0;'>
+										<label for="sel17"><font color = black>&lt; B &gt; &lt; U &gt;文字&lt; /U &gt; &lt; /B &gt;</font><br><span id = showHint[17]></span></label>
+									</div>
+								</p>
+								<p><li>&lt; img src = elephant.jpg align = left &gt; 這段程式碼的意思為?<span id = xo[6]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel18" name=p6 onclick='sel=18;question[6] = 1;feedback[4] = 1;'>
+										<label for="sel18"><font color = black>圖片在左而文字環繞</font><br><span id = showHint[18]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel19" name=p6 onclick='sel=19;question[6] = 0;'>
+										<label for="sel19"><font color = black>圖片在右而文字環繞</font><br><span id = showHint[19]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel20" name=p6 onclick='sel=20;question[6] = 0;'>
+										<label for="sel20"><font color = black>圖片在左而文字不環繞</font><br><span id = showHint[20]></span></label>
+									</div>
+								</p>
+								<p><li>欲使產生的字體為紅色，下列程式碼何者正確?<span id = xo[7]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel21" name=p7 onclick='sel=21;question[7] = 0;'>
+										<label for="sel21"><font color = black>&lt;font = red &gt; &lt; /font&gt;</font><br><span id = showHint[21]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel22" name=p7 onclick='sel=22;question[7] = 0;'>
+										<label for="sel22"><font color = black>&lt;color = red &gt; &lt;/color&gt;</font><br><span id = showHint[22]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel23" name=p7 onclick='sel=23;question[7] = 1;feedback[3] = 1;'>
+										<label for="sel23"><font color = black>&lt;font color = #ff0000 &gt; &lt;/font&gt;</font><br><span id = showHint[23]></span></label>
+									</div>
+								</p>
+								<p><li>欲改變整個網頁的背景顏色，下列程式何者正確?<span id = xo[8]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel24" name=p8 onclick='sel=24;question[8] = 0;'>
+										<label for="sel24"><font color = black>&lt;color = red&gt;&lt;/color&gt;</font><br><span id = showHint[24]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel25" name=p8 onclick='sel=25;question[8] = 1;feedback[5] = 1;'>
+										<label for="sel25"><font color = black>&lt;body bgcolor = red&gt; &lt;/body&gt;</font><br><span id = showHint[25]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel26" name=p8 onclick='sel=26;question[8] = 0;'>
+										<label for="sel26"><font color = black>&lt;bgcolor = #ff0000&gt; &lt;/bgcolor&gt;</font><br><span id = showHint[26]></span></label>
+									</div>
+								</p>
+								<p><li>下列哪個標籤能讓字體變成斜體?<span id = xo[9]></span></li>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel27" name=p9 onclick='sel=27;question[9] = 0;'>
+										<label for="sel27"><font color = black>&lt;B&gt;</font><br><span id = showHint[27]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel28" name=p9 onclick='sel=28;question[9] = 0;'>
+										<label for="sel28"><font color = black>&lt;U&gt;</font><br><span id = showHint[28]></span></label>
+									</div>
+									<div class="4u 12u$(small)">
+										<input type="radio" id="sel29" name=p9 onclick='sel=29;question[9] = 1;feedback[3] = 1;'>
+										<label for="sel29"><font color = black>&lt;I&gt;</font><br><span id = showHint[29]></span></label>
+									</div>
+								</p>
+
+								<p id='msg'> </p>
+								<font size = 5 color = red><span>your score: </span><span id='showScore'></span><br></font>
+								<button onclick = "judge()">交卷</button>	<button onclick = "explain()">顯示詳解</button>	<button onclick="suggest();">學習診斷</button>	
+								<button onclick="retest();">重新挑戰</button>
+								<p id='msg3'></p>
+							</font>
+							
+							
+						</div>
+					</div>
+				</div>
+			</section>
+
+		<!-- Four -->
+			<section id="four" class="wrapper style3">
+				<div class="inner">
+
+					<header class="align-center">
+						<h2>開發成員介紹</h2>
+						<p>作者:賴阿福、楊文忻、金宣妘<br><a href = "author.html"><font color = grey>查看更多作者介紹</font></a><br>模板:<a href = "https://templated.co/transitive" target = _blank>Transitive TEMPLATED</a></p>
+					</header>
+
+				</div>
+			</section>
+
+		
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

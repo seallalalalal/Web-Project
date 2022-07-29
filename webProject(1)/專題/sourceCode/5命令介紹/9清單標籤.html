@@ -1,0 +1,292 @@
+<html>
+<body bgcolor="#ADADAD">
+<div style=margin:50px 130px 130px 130px>
+<ul>
+	
+		<p><font face="細明體"><a name="23"></a></font><font color="#0000FF"
+		face="細明體">列示(List)命令</font><font face="細明體"> </font></p>
+	<li>
+		<p><font face="細明體"><a name="23"> </a></font></p>
+
+		<p><font face="細明體"><font color="#8000FF">&lt;UL&gt;...&lt;/UL&gt;</font>命令: 
+		無編號列示(<b><u>U</u></b>NORDERED <b><u>L</u></b>IST) </font></p>
+
+		<p><font face="細明體">顯示時每個項目都會有一個前導記號(通常是一個圓點)。 
+		</font></p>
+
+		<p><font face="細明體">每個項目前加&lt;li&gt;標籤 </font></p>
+
+		<p><font face="細明體">例: </font></p>
+
+		<p><font face="細明體">&lt;H3&gt;無編號列示&lt;/H3&gt; </font></p>
+
+		<p><font face="細明體">&lt;UL&gt; </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第一項 </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第二項 </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第三項 </font></p>
+
+		<p><font face="細明體">&lt;/UL&gt; </font></p>
+
+		<p><font face="細明體">結果:</font></p>
+
+		<h3>無編號列示</h3>
+
+		<ul>
+		  <li>這是第一項 </li>
+		  <li>這是第二項 </li>
+		  <li>這是第三項 </li>
+		</ul>
+
+		<hr>
+
+		<p><font face="細明體">例:巢式列示 </font></p>
+
+		<p><font face="細明體">&lt;H3&gt;無編號列示&lt;/H3&gt; </font></p>
+
+		<p><font face="細明體">&lt;UL&gt; </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第一項 </font></p>
+
+		<p><font face="細明體">&lt;UL&gt; </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第一項 -1 </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第一項 -2 </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第一項 -3 </font></p>
+
+		<p><font face="細明體">&lt;/UL&gt; </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第二項 </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第三項 </font></p>
+
+		<p><font face="細明體">&lt;/UL&gt;</font></p>
+
+		<p><font face="細明體">結果: </font></p>
+
+		<h3>無編號列示</h3>
+
+		<ul>
+		  <li>這是第一項 <ul>
+			  <li>這是第一項 -1 </li>
+			  <li>這是第一項 -2 </li>
+			  <li>這是第一項 -3 </li>
+			</ul>
+		  </li>
+		  <li>這是第二項 </li>
+		  <li>這是第三項 </li>
+		</ul>
+
+		<hr>
+
+		<p><font face="細明體">例:列示之鏈結 </font></p>
+
+		<p><font face="細明體">&lt;H3&gt;</font>市師網路資源<font face="細明體">&lt;/H3&gt; 
+		</font></p>
+
+		<p><font face="細明體">&lt;UL&gt; </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; &lt;</font><font face="新細明體">A 
+		HREF=&quot;HTTP://140.131.41.10&quot;&gt;</font>市師<font face="細明體">WWW 
+		SERVER&lt;/A&gt; </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; &lt;</font><font face="新細明體">A 
+		HREF=&quot;FTP://140.131.41.10&quot;&gt;</font>市師<font face="細明體">FTP 
+		SERVER&lt;/A&gt; </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; &lt;</font><font face="新細明體">A 
+		HREF=&quot;GOPHER://140.131.41.10&quot;&gt;</font>市師<font face="細明體">GOPHER 
+		ERVER&lt;/A&gt; </font></p>
+
+		<p><font face="細明體">&lt;/UL&gt;</font></p>
+
+		<p>結果:</p>
+
+		<h3>市師網路資源</h3>
+
+		<ul>
+		  <li><a HREF="HTTP://140.131.41.10">市師WWW SERVER</a> </li>
+		  <li><a HREF="FTP://140.131.41.10">市師FTP SERVER</a> </li>
+		  <li><a HREF="GOPHER://140.131.41.10">市師GOPHER ERVER</a> </li>
+		</ul>
+
+		<hr>
+	<li>
+		<p><font face="細明體" color="#8000FF"> <a name="23-2"><a></font></p>
+
+		<p><font face="細明體"><font color="#8000FF">&lt;O</a>L&gt;...&lt;/OL&gt;</font>命令: 
+		有編號列示(<b><u>O</u></b>RDERED <b><u>L</u></b>IST) </font></p>
+
+		<p><font face="細明體">顯示時每個項目都會自動加上前導編號。 </font></p>
+
+		<p><font face="細明體">每個項目前加&lt;li&gt;標籤 <br>
+		</font></p>
+
+		<p><font face="細明體">編號類型: </font></p>
+
+		<table border="1">
+		  <tr>
+			<td width="144"><font face="細明體">&lt;OL TYPE=1&gt;</font></td>
+			<td width="252"><font face="細明體">數字，如1，2，3........ </font></td>
+		  </tr>
+		  <tr>
+			<td width="144"><font face="細明體">&lt;OL TYPE=A&gt;</font></td>
+			<td width="252"><font face="細明體">大寫字母，如A，B，C........ </font></td>
+		  </tr>
+		  <tr>
+			<td width="144"><font face="細明體">&lt;OL TYPE=a&gt;</font></td>
+			<td width="252"><font face="細明體">小寫字母，如a，b，c......... </font></td>
+		  </tr>
+		  <tr>
+			<td width="144"><font face="細明體">&lt;OL TYPE=I&gt;</font></td>
+			<td width="252"><font face="細明體">大寫羅馬字母，如I，II，III.... </font></td>
+		  </tr>
+		  <tr>
+			<td width="144"><font face="細明體">&lt;OL TYPE=i&gt;</font></td>
+			<td width="252"><font face="細明體">小寫羅馬字母，如i，ii，iii...... </font></td>
+		  </tr>
+		</table>
+
+		<p><font face="細明體">例: </font></p>
+
+		<p><font face="細明體">&lt;H3&gt; 有編號列示&lt;/H3&gt; </font></p>
+
+		<p><font face="細明體">&lt;OL&gt; </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第一項 </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第二項 </font></p>
+
+		<p><font face="細明體">&lt;LI&gt; 這是第三項 </font></p>
+
+		<p><font face="細明體">&lt;/OL&gt;</font></p>
+
+		<p>結果:</p>
+
+		<h3>有編號列示</h3>
+
+		<ol>
+		  <li>這是第一項 </li>
+		  <li>這是第二項 </li>
+		  <li>這是第三項 </li>
+		</ol>
+
+		<hr>
+
+		<p><font face="細明體">標號的起始點不一定從 I./A./I. 
+		開始，您可指定一起始順序，如： </font></p>
+
+		<p><font face="細明體">從 3./C./III. 開始列表，只要記得在 &lt;OL 
+		之後再加上 START=3./C./III.&gt; </font></p>
+
+		<p><font face="細明體">即可。<br>
+		</font></p>
+
+		<p><font face="細明體">例：下列表列會以小寫 C 開始列表。 </font></p>
+
+		<p><font face="細明體">&lt;OL type=a start=3&gt; </font></p>
+
+		<p><font face="細明體">&lt;LI&gt;</font>這是第一項 </p>
+
+		<p><font face="細明體">&lt;LI&gt;</font>這是第二項</p>
+
+		<p><font face="細明體">&lt;LI&gt;</font>這是第三項 </p>
+
+		<p><font face="細明體">. </font></p>
+
+		<p><font face="細明體">. </font></p>
+
+		<p><font face="細明體">&lt;/OL&gt;</font></p>
+
+		<p>結果: 
+
+		<ol type="a" start="3">
+		  <li>這是第一項 </li>
+		  <li>這是第二項 </li>
+		  <li>這是第三項 . . </li>
+		</ol>
+
+		<hr>
+	<li>
+		<p><font face="細明體" color="#8000FF"> <a name="23-3"></a></font></p>
+
+		<p><font face="細明體"><font color="#8000FF">&lt;DL</a>&gt;...&lt;/DL&gt;</font>命令: 
+		定義式列示(definition list) </font></p>
+
+		<p><font face="細明體">定義式列示是用來在列式項目之下產生一小段說明文字, 
+		這一小段說 </font></p>
+
+		<p><font face="細明體">明文字及稱為該項目的「定義」(Definition)或「描述」(Description)。 
+		</font></p>
+
+		<p><font face="細明體">定義式列示區段由&lt;DL&gt;開始, &lt;/DL&gt;結束, </font></p>
+
+		<p><font face="細明體">區段中的每個項目以&lt;DT&gt;加以標記, </font></p>
+
+		<p><font face="細明體">項目的定義則以 &lt;DD&gt;標注之, 顯示時, 
+		最明顯的是定義會內縮。 </font></p>
+
+		<p><font face="細明體">例: </font></p>
+
+		<p><font face="細明體">&lt;H3&gt; 定義式列示&lt;/H3&gt; </font></p>
+
+		<p><font face="細明體">&lt;OL&gt;</font></p>
+
+		<p><font face="細明體">&lt;DD&gt; 這是第一項 </font></p>
+
+		<p><font face="細明體">&lt;DD&gt; 這是第二項 </font></p>
+
+		<p><font face="細明體">&lt;DD&gt; 這是第三項 </font></p>
+
+		<p><font face="細明體">&lt;/OL&gt;</font></p>
+
+		<p><font face="細明體">結果: </font></p>
+
+		<h3>定義式列示</h3>
+
+		<ol>
+		  <dl>
+			<dd>這是第一項 </dd>
+			<dd>這是第二項 </dd>
+			<dd>這是第三項 </dd>
+		  </dl>
+		</ol>
+
+		<hr>
+
+		<p><font face="細明體">&lt;H3&gt; 定義式列示-2&lt;/H3&gt; </font></p>
+
+		<p><font face="細明體">&lt;OL&gt;</font></p>
+
+		<p><font face="細明體">&lt;DD&gt; &lt;IMG SRC=&quot;elephant.gif&quot;&gt;這是第一項 
+		</font></p>
+
+		<p><font face="細明體">&lt;DD&gt; &lt;IMG SRC=&quot;elephant.gif&quot;&gt;這是第二項 
+		</font></p>
+
+		<p><font face="細明體">&lt;DD&gt; &lt;IMG SRC=&quot;elephant.gif&quot;&gt;這是第三項 
+		</font></p>
+
+		<p><font face="細明體">&lt;/OL&gt; <br>
+		<br>
+		結果:</font></p>
+
+		<h3>定義式列示-2</h3>
+
+		<ol>
+		  <dl>
+			<dd><img SRC="../../素材庫/elephant.gif" width="76" height="63">這是第一項 </dd>
+			<dd><img SRC="../../素材庫/elephant.gif" width="76" height="63">這是第二項 </dd>
+			<dd><img SRC="../../素材庫/elephant.gif" width="76" height="63">這是第三項 </dd>
+		  </dl>
+		</ol>
+
+		<hr>
+</ul>
+</div>
+</body>
+</html>

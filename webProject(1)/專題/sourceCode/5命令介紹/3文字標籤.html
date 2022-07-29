@@ -1,0 +1,56 @@
+<html>
+<body bgcolor="#ADADAD">
+<div style=margin:50px 130px 130px 130px>
+<ul>
+	<li>
+		<p><font color="#0000FF">&lt;hX&gt;...&lt;/hX&gt;</font><font>命令</font>: 文件的標題</font>,X=1..6<br>
+		範例:</p>
+
+		<table border="1">
+		  <tr><td>原始碼</td><td>結果</td></tr>
+		  <tr><td>&lt;h1&gt;這是標題一&lt;/h1&gt;</td><td><h1 align="center">這是標題一</h1></td></tr>
+		  <tr><td>&lt;h2&gt;這是標題二&lt;/h2&gt;</td><td><h2 align="center">這是標題二</h2></td></tr>
+		  <tr><td>&lt;h3&gt;這是標題三&lt;/h3&gt;</td><td><h3 align="center">這是標題三</h3></td></tr>
+		  <tr><td>&lt;h4&gt;這是標題四&lt;/h4&gt;</td><td><h4 align="center">這是標題四</h4></td></tr>
+		  <tr><td>&lt;h5&gt;這是標題五&lt;/h5&gt;</td><td><h5 align="center">這是標題五</h5></td></tr>
+		  <tr><td>&lt;h6&gt;這是標題六&lt;/h6&gt;</td><td><h6 align="center">這是標題六</h6></td></tr>
+		</table>
+	<li>
+		<p><font color="#0000FF">字元格式命令</font></p>
+
+		<p>(1).&lt;b&gt;...&lt;/b&gt;命令: 粗體字<br>位於標記&lt;b&gt;和&lt;/b&gt;之間的文件會以粗體字(Bold)的方式顯示。</p>
+
+		<p>(2).&lt;i&gt;...&lt;/i&gt;命令: 斜體字<br>位於標記&lt;i&gt;和&lt;/i&gt;之間的文件會以斜體字(Italic)的方式顯示。</p>
+
+		<p>(3)&lt;tt&gt;...&lt;/tt&gt;: 打字體<br>位於標記&lt;tt&gt;和&lt;/tt&gt;之間的文件會以固定寬度的打字體(Typewriter Type)的方式顯示。</p>
+
+		<p>(5).&lt;u&gt;...&lt;/u&gt;命令: 文字下劃底線<br>位於標記&lt;u&gt;和&lt;/u&gt;之間的文件會劃底線(UNDERLINE)。</p>
+
+		<table border="1">
+		  <tr><td width="108">BOLD</td><td width="203">&lt;b&gt;文字&lt;/b&gt;</td><td width="122"><strong>文字</strong></td></tr>
+		  <tr><td width="108">ITALIC </td><td width="203">&lt;i&gt;文字&lt;/i&gt; </td><td width="122"><em>文字</em></td></tr>
+		  <tr><td width="108">UNDERLINE</td><td width="203">&lt;u&gt;文字&lt;/u&gt; </td><td width="122"><u>文字</u></td></tr>
+		  <tr><td width="108">\TELETYPE </td><td width="203">&lt;tt&gt;文字&lt;/tt&gt; </td><td width="122"><tt>文字</tt></td></tr>
+		  <tr><td width="108">SMALL </td><td width="203">&lt;small&gt;文字&lt;/small&gt; </td><td width="122"><font size="2" >文字</td></tr>
+		  <tr><td width="108">BIG</td><td width="203">&lt;big&gt;文字&lt;/big&gt; </td><td width="122"><font size="4" >文字</td></tr>
+		  <tr><td width="108">SUB </td><td width="203">&lt;sub&gt;文字&lt;/sub&gt; </td><td width="122"><sub>文字</sub></td></tr>
+		  <tr><td width="108">SUP </td><td width="203">&lt;sup&gt;文字&lt;/sup&gt; </td><td width="122"><sup>文字</sup></td></tr>
+		</table>
+	<li>
+			<p><font color="#0000FF">&lt;BASEFONT SIZE...&gt;</font>命令: 設定基本字體大小<br>設定基本的字體大小, 這是Netscape的擴增功能。<br>語法為: &lt;BASEFONT SIZE = value&gt;, value值介於1~7間,其預設值是3。 </p>
+	<li>
+		<p><font color="#0000FF">&lt;FONT SIZE...&gt;</font>命令:改變字體大小<br>設定字體的絕對或相對大小。<br><b>絕對字體大小的設定語法:</b></p>
+		<p>&lt;FONT SIZE = <u>value</u>&gt;<br>說明: value 為設定值, 介於1~7之間, 預設值亦為3。</p>
+		<p><b>相對字體大小的設定語法:</b>&lt;FONT SIZE = [{<b><u>+,-</u></b>}]value&gt;<br>說明: 當我們使用&lt;FONT SIZE...&gt;設定字體大小時,若在數字前加上 + 或 - 號,表示以&lt;BASEFONT SIZE...&gt;的設定為基準,加(+)大或縮小(-)字體大小。 </p>
+		<p>例: &lt;FONT SIZE = 2&gt;<br>&lt;basefont size=3&gt;<br>&lt;font size=+1&gt; size=4<br>&lt;font size=-2&gt; size=2 </p>
+	<li>
+		<p><font color="#0000FF">&lt;FONT FACE&gt;及&lt;FONT COLOR&gt;</font><br>Iexplorer和Netscape在字型上新增Basefont,color,size等屬性,explorer另外增加FACE屬性以定義文字的字體(如細明體、標楷體)</p>
+		<ol>
+		  <li>FACE屬性:定義字體標誌命令 </li><br>
+		  <li>&lt;FONT FACE=&quot;標楷體&quot;&gt;字體測試楷體&lt;/FONT&gt;<br>結果:<br><font face="標楷體">字體測試楷體</li><br>
+		  <li>COLOR:定義字型顏色<br>&lt;font color=red&gt;紅色&lt;/font&gt;&lt;font color=#00ff00&gt;綠色&lt;/font&gt;<br>結果:<br><font color="#FF0000">紅色</font><font color="#00FF00">綠色</font></li>
+		</ol>
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+ <html>
+ <style>
+  ul { /* 取消ul預設的內縮及樣式 */
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    ul.drop-down-menu {
+        border: #ccc 1px solid;
+        display: inline-block;
+        font-family: 'Open Sans', Arial, sans-serif;
+        font-size: 13px;
+    }
+
+    ul.drop-down-menu li {
+        position: relative;
+        white-space: nowrap;
+        border-right: #ccc 1px solid;
+    }
+
+    ul.drop-down-menu > li:last-child {
+        border-right: none;
+    }
+
+    ul.drop-down-menu > li {
+        float: left; /* 只有第一層是靠左對齊*/
+    }
+
+     ul.drop-down-menu a {
+        background-color: #fff;
+        color: #333;
+        display: block;
+        padding: 0 30px;
+        text-decoration: none;
+        line-height: 40px;
+
+    }
+    ul.drop-down-menu a:hover { /* 滑鼠滑入按鈕變色*/
+        background-color: #3C3C3C;
+        color: #fff;
+    }
+    ul.drop-down-menu li:hover > a { /* 滑鼠移入次選單上層按鈕保持變色*/
+        background-color: #3C3C3C;
+        color: #fff;
+    }
+  ul.drop-down-menu ul {
+        border: #ccc 1px solid;
+        position: absolute;
+        z-index: 99;
+        left: -1px;
+        top: 100%;
+       min-width: 180px;
+    }
+
+    ul.drop-down-menu ul li {
+        border-bottom: #ccc 1px solid;
+    }
+
+    ul.drop-down-menu ul li:last-child {
+        border-bottom: none;
+    }
+
+    ul.drop-down-menu ul ul { /*第三層以後的選單出現位置與第二層不同*/
+        z-index: 999;
+        top: 10px;
+        left: 90%;
+    }
+ ul.drop-down-menu ul { /*隱藏次選單*/
+        left: 99999px;
+        opacity: 0;
+        -webkit-transition: opacity 0.3s;
+        transition: opacity 0.3s;
+    }
+
+    ul.drop-down-menu li:hover > ul { /* 滑鼠滑入展開次選單*/
+        opacity: 1;
+        -webkit-transition: opacity 0.3s;
+        transition: opacity 0.3s;
+        left: -1px;
+        border-right: 5px;
+    }
+
+    ul.drop-down-menu li:hover > ul ul { /* 滑鼠滑入之後、次選單之後的選單依舊隱藏*/
+        left: 99999px;
+    }
+
+    ul.drop-down-menu ul li:hover > ul { /* 第二層之後的選單展開位置*/
+        left: 90%;
+    }
+ 
+ 
+ html {
+            height: 100%;
+        }
+
+        body {
+            background-image: url(素材庫/background-2.jpg);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+ </style>
+
+<center>
+
+
+<body bgcolor=#272727>
+<ul class="drop-down-menu">
+	<li> <a href= "sourceCode/1首頁.html" target=show>首頁</a></li>
+	<li> <a href= "sourceCode/2html概說.html" target=show>html概說</a></li>
+	<li> <a href= "sourceCode/3html命令類型.html" target=show>html命令類型</a></li>
+	<li> <a href= "sourceCode/4html檔基本結構.html" target=show>html檔基本結構</a></li>
+	<li><a href="#"> html命令介紹
+		<ul>
+		<li> <a href= "sourceCode/5命令介紹/1分隔標籤.html" target=show>分隔標籤</a></li>
+		<li> <a href= "sourceCode/5命令介紹/2排版標籤.html" target=show>排版標籤</a></li>
+		<li> <a href= "sourceCode/5命令介紹/3文字標籤.html" target=show>文字標籤</a></li>
+		<li> <a href= "sourceCode/5命令介紹/4特殊字元.html" target=show>特殊字元</a></li>
+		<li> <a href= "sourceCode/5命令介紹/5影像標籤.html" target=show>影像標籤</a></li>
+		<li> <a href= "sourceCode/5命令介紹/6背景標籤.html" target=show>背景標籤</a></li>
+		<li> <a href= "sourceCode/5命令介紹/7連結標籤.html" target=show>連結標籤</a></li>
+		<li> <a href= "sourceCode/5命令介紹/8表格標籤.html" target=show>表格標籤</a></li>
+		<li> <a href= "sourceCode/5命令介紹/9清單標籤.html" target=show>清單標籤</a></li>
+		<li> <a href= "sourceCode/5命令介紹/10路徑.html" target=show>路徑</a></li>
+		<li> <a href= "sourceCode/5命令介紹/11跑馬燈.html" target=show>跑馬燈</a></li>
+		<li> <a href= "sourceCode/5命令介紹/12其他.html" target=show>其他</a></li>
+		</ul>
+	</li>
+	<li><a href="#">習題
+		<ul>
+		<li> <a href= "sourceCode/6習題/12選擇題1.html" target=show>選擇題練習1</a></li>
+		<li> <a href= "sourceCode/6習題/13選擇題2.html" target=show>選擇題練習2</a></li>
+		<li> <a href= "sourceCode/6習題/14手寫1.html" target=show>手寫1</a></li>
+		<li> <a href= "sourceCode/6習題/15手寫2 .html" target=show>手寫2</a></li>
+		<li> <a href= "sourceCode/6習題/16手寫3.html" target=show>手寫3</a></li>
+		<li> <a href= "sourceCode/6習題/17手寫4.html" target=show>手寫4</a></li>
+		<li> <a href= "sourceCode/6習題/18手寫5.html" target=show>手寫5</a></li>
+		</ul>
+	</li>
+ <li> <a href= "sourceCode/7製作個人網站.html" target=show>製作個人網站</a></li>
+ <li> <a href= "sourceCode/8其他參考資料來源.html" target=show>參考與資料來源</a></li>
+</ul>
+
+
+<iframe iframe height="92%" width="60%" src="sourceCode/1首頁.html" name="show"></iframe>
+
+ </center>
+
+	
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<!--
+	Transitive by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>框架</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="logo"><a href="index.html">HTML <span>教學網站</span></a></div>
+				<a href="#menu" class="toggle"><span>Menu</span></a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li> <a>html命令介紹</a></li>
+					<ul>
+						<li> <a href= "1seperateTag.html">分隔標籤</a></li>
+  						<li> <a href= "2typographyTag.html">排版標籤</a></li>
+  						<li> <a href= "3textTag.html">文字標籤</a></li>
+  						<li> <a href= "4specialSymbol.html">特殊字元</a></li>
+  						<li> <a href= "5imageTag.html">影像標籤</a></li>
+						<li> <a href= "6backGroundTag.html">背景標籤</a></li>
+						<li> <a href= "7linkTag.html">連結標籤</a></li>
+						<li> <a href= "8tableTag.html">表格標籤</a></li>
+						<li> <a href= "9listTag.html">清單標籤</a></li>
+						<li> <a href= "10path.html">路徑</a></li>
+ 						<li> <a href= "11marquee.html">跑馬燈</a></li>
+ 						<li> <a href= "12frame.html">框架</a></li>
+						<li> <a href= "13imageMap.html">影像地圖</a></li>
+					</ul>
+					<li><a>選擇題</a></li>
+					<ul>
+						<li> <a href= "multipleChoice1.html">選擇練習題1</a></li>
+   						<li> <a href= "multipleChoice2.html">選擇練習題2</a></li>
+ 					</ul>
+					<li><a>手寫題</a></li>
+					<ul>
+   						<li> <a href= "hW-1seperateTag.html">分隔標籤</a></li>
+  						<li> <a href= "hW-2typographyTag.html">排版標籤</a></li>
+						<li> <a href= "hW-3.1textTag.html">文字標籤1</a></li>
+						<li> <a href= "hW-3.2textTag.html">文字標籤2</a></li>
+						<li> <a href= "hW-3.3textTag.html">文字標籤3</a></li>
+  						<li> <a href= "hW-5imageTag.html">影像標籤</a></li>
+						<li> <a href= "hW-7linkTag.html">連結標籤</a></li>
+						<li> <a href= "hW-8.1tableTag.html">表格標籤1</a></li>
+						<li> <a href= "hW-8.2tableTag.html">表格標籤2</a></li>
+						<li> <a href= "hW-8.3tableTag.html">表格標籤3</a></li>
+						<li> <a href= "hW-8.4tableTag.html">表格標籤4</a></li>
+						<li> <a href= "hW-9listTag.html">清單標籤</a></li>
+						<li> <a href= "hW-10marquee.html">跑馬燈</a></li>
+ 						<li> <a href= "hW-11frame.html">框架</a></li>
+ 					</ul>
+					<li><a>模擬練習</a></li>
+					<ul>
+   						<li> <a href= "JStest/1.html">迴圈模擬1</a></li>
+  						<li> <a href= "JStest2/loop.html">迴圈模擬2</a></li>
+						
+ 					</ul>
+ 					<li> <a href= "references.html">參考與資料來源</a></li>
+					<li> <a href= "textIndex.html">標籤索引</a></li>
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<section id="one" class="wrapper style2">
+				<div class="inner">
+					<div class="box">
+						<div class="image fit">
+							<img src="images/pic01.jpg" alt="" />
+						</div>
+						<div class="content">
+							<header class="align-center">
+								<h2>框架</h2>
+								<p></p>
+							</header>
+							<hr size = 1 bgcolor = grey>
+							<font color = black>
+							<li>框架(frames):<a name = 1></a></li>
+								<ol>	
+									<li><p>frameset + frame(整個頁面的框架)<br></p>
+										<p>(1)&lt;frameset&gt;...&lt;/frameset&gt;不放在&lt;body&gt;...&lt;/body&gt;裡，單獨置放於html文件檔</p>
+										<p>(2)&lt;frameset&gt;...&lt;/frameset&gt;:宣告框架集，內容包含多個frame<br>
+										&nbsp&nbsp&nbsp&nbsp&lt;frame&gt;...:宣告一個框架</p>
+										<p><font face="fantasy">Example</font>:<br>
+										<font color=blue>&lt;html&gt;<br>
+										&lt;frameset</font> cols="50%,50%"&gt;<br>
+										&nbsp&nbsp&nbsp&nbsp<font color=red>&lt;frame</font> src="frame1.html"&gt;<br>
+										&nbsp&nbsp&nbsp&nbsp<font color=red>&lt;frame</font> src="frame2.html"&gt;<br>
+										<font color=blue>&lt;/frameset&gt;<br>
+										&lt;/html&gt;</font><br>
+										<font face="fantasy">Result</font>:<br>
+										<img width =500 height=250 src=images/框1.jpg>
+										</p>
+										
+										<p>(3)&lt;frameset rows="value1" cols="value2" border="value3" bordercolor="color"&gt;...&lt;/frameset&gt;<br>
+										&nbsp&nbsp&nbsp&nbspcols屬性：比例(以百分比或Pixels表示，可同時制定多個框架)<br>
+										&nbsp&nbsp&nbsp&nbsprows屬性：value2定義垂直方向所佔之大小或比例(以百分比或Pixels表示，可同時制定多個框架)<br>
+										&nbsp&nbsp&nbsp&nbspborder屬性：value3值定義框架邊緣粗細<br>
+										&nbsp&nbsp&nbsp&nbspbordercolor屬性：color定義框架顏色</p>
+										<p><font face="fantasy">Example</font>:<br>
+										&lt;html&gt;<br>
+										&lt;frameset <font color=red>rows="50%,50%" border="3" bordercolor="red"</font>&gt;<br>
+										&lt;frame src="frame1.html"&gt;<br>
+										&lt;frame src="frame2.html"&gt;<br>
+										&lt;/frameset&gt;<br>
+										&lt;/html&gt;<br>
+										
+										<font face="fantasy">Result</font>:<br>
+										<img width =500 height=250 src=images/框2.jpg></p>
+										
+										<p><font face="fantasy">Example</font>:<br>
+										&lt;html&gt;<br>
+										&lt;frameset <font color=red>rows="50%,50%" cols="50%,50%" border="10" bordercolor="blue"</font>&gt;<br>
+										&lt;frame src="frame1.html"&gt;<br>
+										&lt;frame src="frame2.html"&gt;<br>
+										&lt;frame src="frame3.html"&gt;<br>
+										&lt;frame src="frame4.html"&gt;<br>
+										&lt;/frameset&gt;<br>
+										&lt;/html&gt;<br>
+										
+										<font face="fantasy">Result</font>:<br>
+										<img width =500 height=250 src=images/框3.jpg></p>
+										
+										<p>(4)&lt;frame src="URL" width="value1" height="value2" scrolling="type" marginwidth="value3" marginheight="value4" name="id""&gt;...<br>
+										&nbsp&nbsp&nbsp&nbspwidth屬性：value1定義水平方向所佔之大小或比例<br>
+										&nbsp&nbsp&nbsp&nbspheight屬性：value2定義垂直方向所佔之大小或比例<br>
+										&nbsp&nbsp&nbsp&nbspscrolling屬性：type:auto(需要時)、yes(顯示)、no(不顯示)滾動條<br>
+										&nbsp&nbsp&nbsp&nbspmarginwidth屬性：value3制定框架左右邊距<br>
+										&nbsp&nbsp&nbsp&nbspmarginheight屬性：value4制定框架上下邊距<br>
+										&nbsp&nbsp&nbsp&nbspname屬性：id定義框名稱，與&lt;a href="URL" target="type"&gt;合用。<br>
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsptype:_top(原視窗上)、_self(將 URL 的內容顯示在被點選的 Frame 中)、_blank(新視窗上)、_parent(被點選的 Frame 的母視窗上)、((framename))(打開至指定名稱的的frame)</p>
+										
+										<p><font face="fantasy">Example</font>:<br>
+										&lt;html&gt;<br>
+										&lt;frameset cols="50%,50%"&gt;<br>
+										&lt;frame src="frame1.html" <font color=red>scrolling="no"</font>&gt;<br>
+										&lt;frame src="frame2.html"&gt;<br>
+										&lt;/frameset&gt;<br>
+										&lt;/html&gt;<br>
+										
+										<font face="fantasy">Result</font>:<br>
+										<img width =500 height=250 src=images/框4.jpg></p>
+										
+										<p><font face="fantasy">Example</font>:<br>
+										&lt;html&gt;<br>
+										&lt;frameset cols="50%,50%"&gt;<br>
+										&lt;frame src="frame1.html" <font color=red>scrolling="yes"</font>&gt;<br>
+										&lt;frame src="frame2.html"&gt;<br>
+										&lt;/frameset&gt;<br>
+										&lt;/html&gt;<br>
+										
+										<font face="fantasy">Result</font>:<br>
+										<img width =500 height=250 src=images/框5.jpg></p>
+										
+										<p><font face="fantasy">Example</font>:<br>
+										&lt;html&gt;<br>
+										&lt;frameset rows="50%,50%" cols="50%,50%"&gt;<br>
+										&lt;frame src="frame1.html" <font color=red>marginwidth="5" marginheight="20"</font>&gt;<br>
+										&lt;frame src="frame2.html" <font color=red>marginwidth="20" marginheight="5"</font>&gt;<br>
+										&lt;frame src="frame3.html" <font color=red>marginwidth="0" marginheight="0"</font>&gt;<br>
+										&lt;frame src="frame4.html"&gt;<br>
+										&lt;/frameset&gt;<br>
+										&lt;/html&gt;<br>
+										
+										<font face="fantasy">Result</font>:<br>
+										<img width =500 height=250 src=images/框6.jpg></p>
+										
+										<p><font face="fantasy">Example</font>:<br>
+										//框架.html<br>
+										&lt;html&gt;<br>
+										&lt;frameset cols="50%,50%" &gt;<br>
+										&lt;frame src="frame1.html"&gt;<br>
+										&lt;frame src="frame2.html" name="frame2"&gt;<br>
+										&lt;/frameset&gt;<br>
+										&lt;/html&gt;<br>
+										<br>
+										//frame1.html<br>
+										&lt;html&gt;<br>
+										&lt;body&gt;<br>
+										&lt;p&gt;&lt;a href=_top.html <font color=red>target=_top</font>&gt;_top&lt;/a&gt;&lt;/p&gt;<br>
+										&lt;p&gt;&lt;a href=_self.html <font color=red>target=_self</font>&gt;_self&lt;/a&gt;&lt;/p&gt;<br>
+										&lt;p&gt;&lt;a href=_blank.html <font color=red>target=_blank</font>&gt;_blank&lt;/a&gt;&lt;/p&gt;<br>
+										&lt;p&gt;&lt;a href=_parent.html <font color=red>target=_parent</font>&gt;_parent&lt;/a&gt;&lt;/p&gt;<br>
+										&lt;p&gt;&lt;a href="frame2 - connect.html" <font color=red>target=frame2</font>&gt;((framename))&lt;/a&gt;&lt;/p&gt;<br>
+										&lt;/body&gt;<br>
+										&lt;/html&gt;<br>
+										<font face="fantasy">Result</font>:<br>
+										<video width="40%" height="40%" controls="controls">
+										<source src="images/框7.mp4" type="video/mp4">
+										</video></p>
+										
+										
+										<p><font face="fantasy">Example</font>:<br>
+										&lt;html&gt;<br>
+										&lt;frameset cols=50%,* rows=* &gt;<br>
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;frameset cols=* rows=50%,*&gt;<br>
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;frame src=frame2.html &gt;<br>
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;frame src=frame3.html  &gt;<br>
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;/frameset&gt;<br>
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&lt;frame src=frame4.html &gt;<br>
+										&lt;/frameset&gt;<br>
+										&lt;/html&gt;<br>
+										
+										<font face="fantasy">Result</font>:<br>
+										<img width =500 height=250 src=images/框9.jpg></p>
+
+									</li>
+									<li><a name = 2></a><p>iframe(內嵌的網頁元素):&lt;iframe src=URL &gt;&lt;/iframe&gt;</p>
+										<p>(1)&lt;iframe src="URL" width="value1" height="value" frameborder="value2" scrolling="type3"/&gt;
+										&nbsp&nbsp&nbsp&nbspwidth屬性：value1定義水平方向所佔之大小或比例<br>
+										&nbsp&nbsp&nbsp&nbspheight屬性：value2定義垂直方向所佔之大小或比例<br>
+										&nbsp&nbsp&nbsp&nbspframeborder屬性：value3值定義框架邊緣粗細<br>
+										&nbsp&nbsp&nbsp&nbspscrolling屬性：type:auto(需要時)、yes(顯示)、no(不顯示)滾動條<br></p>
+										
+										<p><font face="fantasy">Example</font>:<br>
+										&lt;html&gt;<br>
+										&lt;body&gt;<br>
+										&lt;iframe src=frame2.html /&gt;<br>
+										&lt;iframe src=frame3.html /&gt;<br>
+										&lt;/body&gt;<br>
+										&lt;/html&gt;<br>
+										
+										<font face="fantasy">Result</font>:<br>
+										<img width =500 height=250 src=images/框8.jpg></p>
+										</p>
+									</li>
+									<li><p>frameset+frame與iframe之比較</p>
+									<table border>
+									<tr>
+									<td align=center></td><td align=center>frameset+frame</td><td align=center>iframe</td><td align=center>備註</td>
+									</tr>
+									<tr>
+									<td align=center>需要放在body</td><td align=center>否</td><td align=center>是</td><td align=left>巢狀在frameSet中的iframe必需放在body中</td>
+									</tr>
+									<tr>
+									<td align=center>優點</td><td align=left>(1)只需要載入頁面中的一個框架頁(減少資料傳輸，加快速度)</td><td align=left>(1)頁面和程式分離<br>(2)把原先的網頁全部原封不動顯示下來</td><td align=left></td>
+									</tr>
+									<tr>
+									<td align=center>缺點</td><td align=left>(1)安全性較差<br>(2)瀏覽器的後退按鈕無效（只能針對實現當前游標所在頁面的前進與後退）</td><td align=left>(1)阻塞頁面載入</td><td align=center></td>
+									</tr>
+									</table>
+									</li>
+								</ol>
+							</font>
+						</div>
+					</div>
+				</div>
+			</section>
+
+		<!-- Four -->
+			<section id="four" class="wrapper style3">
+				<div class="inner">
+
+					<header class="align-center">
+						<h2>開發成員介紹</h2>
+						<p>作者:賴阿福、楊文忻、金宣妘<br><a href = "author.html"><font color = grey>查看更多作者介紹</font></a><br>模板:<a href = "https://templated.co/transitive" target = _blank>Transitive TEMPLATED</a></p>
+					</header>
+
+				</div>
+			</section>
+
+		
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

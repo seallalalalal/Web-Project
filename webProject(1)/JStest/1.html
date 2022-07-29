@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<!--
+	Transitive by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+<script>
+
+//button function
+var answer = 'var n = document.getElementById("in7").value;var str = "";for(var i = 0; n > 0; i++){str += n % 10;n  = Math.floor(n / 10 );}document.getElementById("prs7").innerHTML = str;';
+function next(){
+	if(admit != -1){
+		window.location.href = "2.html";
+	}
+	else{
+		alert("請先檢查答案");
+	}
+}
+var admit = -1;
+function judge(){
+	var ans =  document.getElementById("show").value;
+	var num = 0;
+	if(ans == ""){
+		document.getElementById("hint").innerHTML = "答錯了!\n正確答案應為:\n" +
+													'var n = document.getElementById("in7").value;\n' +
+													'var str = "";\n' +
+													'for(var i = 0; n > 0; i++){\n' +
+													'str += n % 10;\n' +
+													'n  = Math.floor(n / 10 );\n' +
+													'}\n' +
+													'document.getElementById("prs7").innerHTML = str;';
+													
+	}
+
+	else{
+		num++;
+		document.getElementById("hint").innerHTML = "答對了!\n正確答案應:\n" +
+													'var n = document.getElementById("in7").value;\n' +
+													'var str = "";\n' +
+													'for(var i = 0; n > 0; i++){\n' +
+													'str += n % 10;\n' +
+													'n  = Math.floor(n / 10 );\n' +
+													'}\n' +
+													'document.getElementById("prs7").innerHTML = str;';
+		
+	}
+	if (typeof(Storage) !== "undefined") {
+			localStorage.setItem("rightQuestion", num);
+	}
+	admit = 1;
+}
+		
+		
+
+var cp=0;
+function copy(){
+	cp++;
+	var text = document.getElementById("show").value; 
+	document.getElementById("run").innerHTML=text;
+}
+function clean()
+{
+	document.getElementById("show").value="";
+	document.getElementById("run").style="display:none";
+	cp=0;
+}
+//Answer Function
+function flipint(){
+	var n = document.getElementById("in7").value;
+	var str = "";
+	for(var i = 0; n > 0; i++){
+		str += n % 10;
+		n  = Math.floor(n / 10 );
+	}
+	document.getElementById("prs7").innerHTML = str;
+}
+
+
+</script>
+	<head>
+		<title>第一題</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="subpage" onload="test();window.localStorage.clear();">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="logo"><a href="../index.html">HTML <span>教學網站</span></a></div>
+				<a href="#menu" class="toggle"><span>Menu</span></a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="../index.html">Home</a></li>
+					<li> <a>html命令介紹</a></li>
+					<ul>
+						<li> <a href= "../1seperateTag.html">分隔標籤</a></li>
+  						<li> <a href= "../2typographyTag.html">排版標籤</a></li>
+  						<li> <a href= "../../3textTag.html">文字標籤</a></li>
+  						<li> <a href= "../4specialSymbol.html">特殊字元</a></li>
+  						<li> <a href= "../5imageTag.html">影像標籤</a></li>
+						<li> <a href= "../6backGroundTag.html">背景標籤</a></li>
+						<li> <a href= "../7linkTag.html">連結標籤</a></li>
+						<li> <a href= "../8tableTag.html">表格標籤</a></li>
+						<li> <a href= "../9listTag.html">清單標籤</a></li>
+						<li> <a href= "../10path.html">路徑</a></li>
+ 						<li> <a href= "../11marquee.html">跑馬燈</a></li>
+ 						<li> <a href= "../12frame.html">框架</a></li>
+						<li> <a href= "../13imageMap.html">影像地圖</a></li>
+					</ul>
+					<li><a>選擇題</a></li>
+					<ul>
+						<li> <a href= "../multipleChoice1.html">選擇練習題1</a></li>
+   						<li> <a href= "../multipleChoice2.html">選擇練習題2</a></li>
+ 					</ul>
+					<li><a>手寫題</a></li>
+					<ul>
+   						<li> <a href= "../hW-../1seperateTag.html">分隔標籤</a></li>
+  						<li> <a href= "../hW-../2typographyTag.html">排版標籤</a></li>
+						<li> <a href= "../hW-3.1textTag.html">文字標籤1</a></li>
+						<li> <a href= "../hW-3.2textTag.html">文字標籤2</a></li>
+						<li> <a href= "../hW-3.../../3textTag.html">文字標籤3</a></li>
+  						<li> <a href= "../hW-5imageTag.html">影像標籤</a></li>
+						<li> <a href= "../hW-7linkTag.html">連結標籤</a></li>
+						<li> <a href= "../hW-8.1tableTag.html">表格標籤1</a></li>
+						<li> <a href= "../hW-8.2tableTag.html">表格標籤2</a></li>
+						<li> <a href= "../hW-8.3tableTag.html">表格標籤3</a></li>
+						<li> <a href= "../hW-8.4tableTag.html">表格標籤4</a></li>
+						<li> <a href= "../hW-9listTag.html">清單標籤</a></li>
+						<li> <a href= "../hW-10marquee.html">跑馬燈</a></li>
+ 						<li> <a href= "../hW-11frame.html">框架</a></li>
+ 					</ul>
+					<li><a>模擬練習</a></li>
+					<ul>
+   						<li> <a href= "1.html">迴圈模擬1</a></li>
+  						<li> <a href= "../JStest2/loop.html">迴圈模擬2</a></li>
+						
+ 					</ul>
+ 					<li> <a href= "../references.html">參考與資料來源</a></li>
+					<li> <a href= "../textIndex.html">標籤索引</a></li>
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<section id="one" class="wrapper style2">
+				<div class="inner">
+					<div class="box">
+						<div class="image fit">
+							<img src="images/pic01.jpg" alt="" />
+						</div>
+						<div class="content">
+							<header class="align-center">
+								<h2>Loop or Selection, Writing functions</h2>
+								<p></p>
+							</header>
+							<hr size = 1 bgcolor = grey>
+							<font color = black>
+							<p id = "title">
+								<b><font size = "5" color = "red">第一題:輸入整數並反轉</font></b><br>
+								請看程式碼完成flipInt()這個函數<br><br>
+								完成結果如下
+								
+							</p>
+							<table style = "color:black;font-size:20px" >
+								<tr><td>
+								<p id = "question">
+									
+									<p><span id='loop7'></span>
+									
+												<div class="6u 12u$(xsmall)">
+													輸入整數 : <input type="text" id="in7" value="" placeholder="please input  a number" />
+												</div>
+											
+									<button id='bt7' onclick='flipint();' style='font-size:15px;'>反轉為</button>  <span id='prs7'></span> 
+									</p>
+								</p>
+								</td></tr>
+							</table>
+							
+
+							<p>
+								<b><font size = "5" color = "red">程式碼</font></b><br>
+<pre id = "paragraph1">
+&lt;html&gt;
+&lt;script&gt;
+
+function flipint(){
+</pre>								
+								<textarea id = "show" rows="5" placeholder="Type function here"></textarea>
+<pre id = "paragraph2">
+
+}
+
+&lt;/script&gt;
+
+&lt;body&gt;
+&lt;p&gt;&lt;span id='loop7'&gt;&lt;/span&gt;
+輸入整數:&lt;input type=text id='in7' size=3&gt;
+&lt;button id='bt7' onclick='flipint();' style='font-size:15px;'&gt;反轉為&lt;/button&gt;&lt;span id='prs7'&gt;&lt;/span&gt; &lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+
+
+</pre>
+							</p>
+							<br>
+							<p>
+							<center>
+							<button onclick ="judge()">檢查答案</button>
+							<button onclick = "">提示</button>
+							<button onclick = "next()">下一題</button>
+							</center>
+							</p>
+							<textarea rows = 5 id = "hint" readonly></textarea>
+							
+							
+							</font>
+							
+						</div>
+					</div>
+				</div>
+			</section>
+
+		<!-- Four -->
+			<section id="four" class="wrapper style3">
+				<div class="inner">
+
+					<header class="align-center">
+						<h2>開發成員介紹</h2>
+						<p>作者:賴阿福、楊文忻、金宣妘<br><a href = "author.html"><font color = grey>查看更多作者介紹</font></a><br>模板:<a href = "https://templated.co/transitive" target = _blank>Transitive TEMPLATED</a></p>
+					</header>
+
+				</div>
+			</section>
+
+		
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
